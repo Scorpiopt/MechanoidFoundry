@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+	<MF.MakingMechanoid>Making {0}</MF.MakingMechanoid>
+	<MF.MakeRecipeLabel>make {0}</MF.MakeRecipeLabel>
+	<MF.MakeRecipeDescription>Make {0}.</MF.MakeRecipeDescription>
+</LanguageData>
