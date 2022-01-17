@@ -31,7 +31,7 @@ namespace MechanoidFoundry
     {
         public static void Prefix()
         {
-            foreach (var pawn in DefDatabase<PawnKindDef>.AllDefs)
+            foreach (var pawn in DefDatabase<PawnKindDef>.AllDefs.OrderBy(x => x.race.race.baseBodySize))
             {
                 if (pawn.RaceProps.IsMechanoid)
                 {
@@ -43,6 +43,15 @@ namespace MechanoidFoundry
         }
         private static RecipeDef GetMechRecipeDef(PawnKindDef mech)
         {
+            float costMultiplier = 1;
+            if (mech.race.race.baseBodySize <= 1)
+            {
+                costMultiplier = 0.25f;
+            }
+            else if (mech.race.race.baseBodySize <= 2)
+            {
+                costMultiplier = 0.5f;
+            }
             return new RecipeDef
             {
                 recipeUsers = new List<ThingDef>
@@ -53,8 +62,8 @@ namespace MechanoidFoundry
                 {
                     new SkillRequirement
                     {
-                        skill = SkillDefOf.Intellectual,
-                        minLevel = 6
+                        skill = SkillDefOf.Crafting,
+                        minLevel = 8
                     }
                 },
                 workerClass = typeof(RecipeMakeMechanoid),
@@ -94,16 +103,16 @@ namespace MechanoidFoundry
                 defName = "MakeMechanoid_" + mech.defName,
                 label = "MF.MakeRecipeLabel".Translate(mech.label),
                 description = "MF.MakeRecipeDescription".Translate(mech.label),
-                workAmount = 6666 * mech.race.race.baseBodySize,
+                workAmount = 10000 * mech.race.race.baseBodySize,
                 ingredients = new List<IngredientCount>
                 {
-                    NewIngredient(ThingDef.Named("Steel"), 500),
-                    NewIngredient(ThingDef.Named("Plasteel"), 400),
-                    NewIngredient(ThingDef.Named("ComponentIndustrial"), 100),
-                    NewIngredient(ThingDef.Named("ComponentSpacer"), 50),
-                    NewIngredient(ThingDef.Named("Chemfuel"), 300),
-                    NewIngredient(ThingDef.Named("Gold"), 100),
-                    NewIngredient(ThingDef.Named("Uranium"), 250),
+                    NewIngredient(ThingDef.Named("Steel"), (int)(500 * costMultiplier)),
+                    NewIngredient(ThingDef.Named("Plasteel"), (int)(400 * costMultiplier)),
+                    NewIngredient(ThingDef.Named("ComponentIndustrial"), (int)(100 * costMultiplier)),
+                    NewIngredient(ThingDef.Named("ComponentSpacer"), (int)(50 * costMultiplier)),
+                    NewIngredient(ThingDef.Named("Chemfuel"), (int)(300 * costMultiplier)),
+                    NewIngredient(ThingDef.Named("Gold"), (int)(100 * costMultiplier)),
+                    NewIngredient(ThingDef.Named("Uranium"), (int)(250 * costMultiplier)),
                 },
                 products = new List<ThingDefCountClass>
                 {
@@ -131,8 +140,19 @@ namespace MechanoidFoundry
             }
         }
     }
-
-    [HarmonyPatch(typeof(GenRecipe), nameof(GenRecipe.MakeRecipeProducts))]
+    [HarmonyPatch(typeof(GenDraw), nameof(GenDraw.DrawInteractionCell))]
+    public static class GenDraw_DrawInteractionCell_Patch
+    {
+        public static bool Prefix(ThingDef tDef, IntVec3 center, Rot4 placingRot)
+        {
+            if (tDef == MechanoidFoundryDefOf.MF_MechanoidFoundry)
+            {
+                return false;
+            }
+            return true;
+        }
+    }
+        [HarmonyPatch(typeof(GenRecipe), nameof(GenRecipe.MakeRecipeProducts))]
     public static class GenRecipe_MakeRecipeProducts_Patch
     {
         public static IEnumerable<Thing> Postfix(IEnumerable<Thing> __result, RecipeDef recipeDef, Pawn worker, List<Thing> ingredients, Thing dominantIngredient, IBillGiver billGiver, Precept_ThingStyle precept = null)
@@ -180,7 +200,6 @@ namespace MechanoidFoundry
             LessonAutoActivator.TeachOpportunity(WTH_DefOf.WTH_Power, OpportunityType.Important);
             LessonAutoActivator.TeachOpportunity(WTH_DefOf.WTH_Maintenance, OpportunityType.Important);
             LessonAutoActivator.TeachOpportunity(WTH_DefOf.WTH_Concept_MechanoidParts, OpportunityType.Important);
-            Log.Message(pawn + " - " + pawn.IsHacked() + " - " + pawn.Faction);
         }
     }
 }
