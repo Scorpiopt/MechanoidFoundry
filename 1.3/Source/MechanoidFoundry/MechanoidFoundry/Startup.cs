@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using AnimalBehaviours;
+using HarmonyLib;
 using RimWorld;
 using System;
 using System.Collections.Generic;
@@ -9,8 +10,6 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Verse;
 using Verse.AI;
-using WhatTheHack;
-using WhatTheHack.Needs;
 
 namespace MechanoidFoundry
 {
@@ -26,12 +25,31 @@ namespace MechanoidFoundry
         }
     }
 
+    [StaticConstructorOnStartup]
+    public static class Startup
+    {
+        static Startup()
+        {
+            foreach (var pawn in DefDatabase<PawnKindDef>.AllDefs)
+            {
+                if (pawn.RaceProps.IsMechanoid)
+                {
+                    var compProps = pawn.race.GetCompProperties<CompProperties_Draftable>();
+                    if (compProps is null)
+                    {
+                        pawn.race.comps.Add(new CompProperties_Draftable());
+                    }
+                }
+            }
+        }
+    }
+
     [HarmonyPatch(typeof(DefGenerator), "GenerateImpliedDefs_PreResolve")]
     public static class GenerateImpliedDefs_PreResolve_Patch
     {
         public static void Prefix()
         {
-            foreach (var pawn in DefDatabase<PawnKindDef>.AllDefs.OrderBy(x => x.race.race.baseBodySize))
+            foreach (var pawn in DefDatabase<PawnKindDef>.AllDefs)
             {
                 if (pawn.RaceProps.IsMechanoid)
                 {
@@ -174,32 +192,65 @@ namespace MechanoidFoundry
         private static void SpawnMechanoid(RecipeDef recipeDef, Pawn worker)
         {
             var pawnKindDef = PawnKindDef.Named(recipeDef.defName.Replace("MakeMechanoid_", ""));
-            var pawn = PawnGenerator.GeneratePawn(pawnKindDef, Faction.OfPlayer);
-            pawn.health.AddHediff(WTH_DefOf.WTH_TargetingHacked);
+            var pawn = PawnGenerator.GeneratePawn(new PawnGenerationRequest(pawnKindDef, Faction.OfMechanoids, newborn: false));
+            Log.Message("1 pawn: " + pawn + " - " + pawn.equipment.Primary);
             GenSpawn.Spawn(pawn, worker.Position, worker.Map);
-            pawn.drafter = new Pawn_DraftController(pawn);
-            Need_Power powerNeed = (Need_Power)pawn.needs.TryGetNeed(WTH_DefOf.WTH_Mechanoid_Power);
-            powerNeed.CurLevel = powerNeed.MaxLevel;
-            pawn.health.AddHediff(WTH_DefOf.WTH_BackupBattery, pawn.TryGetReactor());
-            if (pawn.relations == null)
-            {
-                pawn.relations = new Pawn_RelationsTracker(pawn);
-            }
+            Log.Message("2 pawn: " + pawn + " - " + pawn.equipment.Primary);
+            var eq = pawn.equipment.Primary;
+            pawn.equipment.Remove(eq);
+            pawn.SetFaction(Faction.OfPlayer);
+            Log.Message("2 pawn: " + pawn + " - " + pawn.equipment.Primary);
+            pawn.equipment.AddEquipment(eq);
+            Log.Message("3 pawn: " + pawn + " - " + pawn.equipment.Primary);
+        }
+    }
 
-            if (pawn.story == null)
+    [HarmonyPatch(typeof(PawnComponentsUtility), "AddAndRemoveDynamicComponents")]
+    public static class PawnComponentsUtility_AddAndRemoveDynamicComponents
+    {
+        static void Postfix(Pawn pawn)
+        {
+            //These two flags detect if the creature is part of the colony and if it has the custom class
+            bool flagIsCreatureMine = pawn.Faction != null && pawn.Faction.IsPlayer;
+            bool flagIsCreatureDraftable = (pawn.RaceProps.IsMechanoid);
+            if (flagIsCreatureMine && flagIsCreatureDraftable)
             {
-                pawn.story = new Pawn_StoryTracker(pawn);
+                if (pawn.drafter is null)
+                {
+                    pawn.drafter = new Pawn_DraftController(pawn);
+                }
+                if (pawn.relations == null)
+                {
+                    pawn.relations = new Pawn_RelationsTracker(pawn);
+                }
+                if (pawn.story == null)
+                {
+                    pawn.story = new Pawn_StoryTracker(pawn);
+                }
+                if (pawn.ownership == null)
+                {
+                    pawn.ownership = new Pawn_Ownership(pawn);
+                }
             }
-            if (pawn.ownership == null)
+        }
+    }
+
+    [HarmonyPatch(typeof(StatWorker), "IsDisabledFor")]
+    static class StatWorker_IsDisabledFor
+    {
+        static bool Prefix(Thing thing, ref bool __result)
+        {
+
+            if (thing is Pawn && ((Pawn)thing).RaceProps.IsMechanoid)
             {
-                pawn.ownership = new Pawn_Ownership(pawn);
+                Pawn pawn = (Pawn)thing;
+                if (pawn.Faction == Faction.OfPlayer)
+                {
+                    __result = false;
+                    return false;
+                }
             }
-            pawn.Name = PawnBioAndNameGenerator.GeneratePawnName(pawn, NameStyle.Full);
-            Find.LetterStack.ReceiveLetter("WTH_Letter_Success_Label".Translate(), "WTH_Letter_Success_Label_Description".Translate(new object[] { worker.Name.ToStringShort, pawn.Name }), LetterDefOf.PositiveEvent, pawn);
-            worker.jobs.jobQueue.EnqueueFirst(new Job(WTH_DefOf.WTH_ClearHackingTable, pawn, pawn.CurrentBed()) { count = 1 });
-            LessonAutoActivator.TeachOpportunity(WTH_DefOf.WTH_Power, OpportunityType.Important);
-            LessonAutoActivator.TeachOpportunity(WTH_DefOf.WTH_Maintenance, OpportunityType.Important);
-            LessonAutoActivator.TeachOpportunity(WTH_DefOf.WTH_Concept_MechanoidParts, OpportunityType.Important);
+            return true;
         }
     }
 }
