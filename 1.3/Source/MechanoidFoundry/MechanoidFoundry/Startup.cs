@@ -4,6 +4,7 @@ using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,8 +16,36 @@ namespace MechanoidFoundry
 {
     public class RecipeMakeMechanoid : RecipeWorker
     {
+
     }
 
+    public class RecipeHackMechanoid : RecipeWorker
+    {
+        public override bool AvailableOnNow(Thing thing, BodyPartRecord part = null)
+        {
+            if (thing is Pawn pawn && !pawn.Dead)
+            {
+                return false;
+            }
+            return base.AvailableOnNow(thing, part);
+        }
+
+        public override void ApplyOnPawn(Pawn pawn, BodyPartRecord part, Pawn billDoer, List<Thing> ingredients, Bill bill)
+        {
+            ResurrectionUtility.Resurrect(pawn);
+            var eq = pawn.equipment.Primary;
+            if (eq != null)
+            {
+                pawn.equipment.Remove(eq);
+            }
+            pawn.SetFaction(Faction.OfPlayer);
+            PawnComponentsUtility_AddAndRemoveDynamicComponents.MakeComponentsToHackedMechanoid(pawn);
+            if (eq != null)
+            {
+                pawn.equipment.AddEquipment(eq);
+            }
+        }
+    }
     public class MechanoidFoundryMod : Mod
     {
         public MechanoidFoundryMod(ModContentPack content) : base(content)
@@ -39,6 +68,8 @@ namespace MechanoidFoundry
                     {
                         pawn.race.comps.Add(new CompProperties_Draftable());
                     }
+                    pawn.race.AllRecipes.Add(MechanoidFoundryDefOf.MF_HackMechanoid);
+                    pawn.race.race.corpseDef.recipes.Add(MechanoidFoundryDefOf.MF_HackMechanoid);
                 }
             }
         }
@@ -170,7 +201,8 @@ namespace MechanoidFoundry
             return true;
         }
     }
-        [HarmonyPatch(typeof(GenRecipe), nameof(GenRecipe.MakeRecipeProducts))]
+
+    [HarmonyPatch(typeof(GenRecipe), nameof(GenRecipe.MakeRecipeProducts))]
     public static class GenRecipe_MakeRecipeProducts_Patch
     {
         public static IEnumerable<Thing> Postfix(IEnumerable<Thing> __result, RecipeDef recipeDef, Pawn worker, List<Thing> ingredients, Thing dominantIngredient, IBillGiver billGiver, Precept_ThingStyle precept = null)
@@ -193,15 +225,17 @@ namespace MechanoidFoundry
         {
             var pawnKindDef = PawnKindDef.Named(recipeDef.defName.Replace("MakeMechanoid_", ""));
             var pawn = PawnGenerator.GeneratePawn(new PawnGenerationRequest(pawnKindDef, Faction.OfMechanoids, newborn: false));
-            Log.Message("1 pawn: " + pawn + " - " + pawn.equipment.Primary);
             GenSpawn.Spawn(pawn, worker.Position, worker.Map);
-            Log.Message("2 pawn: " + pawn + " - " + pawn.equipment.Primary);
             var eq = pawn.equipment.Primary;
-            pawn.equipment.Remove(eq);
+            if (eq != null)
+            {
+                pawn.equipment.Remove(eq);
+            }
             pawn.SetFaction(Faction.OfPlayer);
-            Log.Message("2 pawn: " + pawn + " - " + pawn.equipment.Primary);
-            pawn.equipment.AddEquipment(eq);
-            Log.Message("3 pawn: " + pawn + " - " + pawn.equipment.Primary);
+            if (eq != null)
+            {
+                pawn.equipment.AddEquipment(eq);
+            }
         }
     }
 
@@ -211,8 +245,13 @@ namespace MechanoidFoundry
         static void Postfix(Pawn pawn)
         {
             //These two flags detect if the creature is part of the colony and if it has the custom class
+            MakeComponentsToHackedMechanoid(pawn);
+        }
+
+        public static void MakeComponentsToHackedMechanoid(Pawn pawn)
+        {
             bool flagIsCreatureMine = pawn.Faction != null && pawn.Faction.IsPlayer;
-            bool flagIsCreatureDraftable = (pawn.RaceProps.IsMechanoid);
+            bool flagIsCreatureDraftable = pawn.RaceProps.IsMechanoid;
             if (flagIsCreatureMine && flagIsCreatureDraftable)
             {
                 if (pawn.drafter is null)
@@ -240,7 +279,6 @@ namespace MechanoidFoundry
     {
         static bool Prefix(Thing thing, ref bool __result)
         {
-
             if (thing is Pawn && ((Pawn)thing).RaceProps.IsMechanoid)
             {
                 Pawn pawn = (Pawn)thing;
@@ -252,6 +290,169 @@ namespace MechanoidFoundry
             }
             return true;
         }
+    }
+
+    [HarmonyPatch(typeof(ITab_Pawn_Health), "ShouldAllowOperations")]
+    static class ITab_Pawn_Health_ShouldAllowOperations
+    {
+        static void Postfix(ITab_Pawn_Health __instance, ref bool __result)
+        {
+            if (__result is false)
+            {
+                var pawn = __instance.PawnForHealth;
+                if (pawn != null && pawn.Dead && pawn.RaceProps.IsMechanoid)
+                {
+                    __result = ShouldAllowOperations(pawn);
+                }
+            }
+        }
+
+        public static bool ShouldAllowOperations(Pawn pawn)
+        {
+            if (!pawn.def.AllRecipes.Any((RecipeDef x) => x.AvailableNow && x.AvailableOnNow(pawn)))
+            {
+                return false;
+            }
+            return true;
+        }
+    }
+
+
+    [HarmonyPatch(typeof(HealthCardUtility), "DrawPawnHealthCard")]
+    static class HealthCardUtility_DrawPawnHealthCard
+    {
+        static void Prefix(Rect outRect, Pawn pawn, ref bool allowOperations, bool showBloodLoss, Thing thingForMedBills)
+        {
+            if (allowOperations && pawn.Dead)
+            {
+                allowOperations = false;
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(HealthCardUtility), "DrawHealthSummary")]
+    static class HealthCardUtility_DrawHealthSummary
+    {
+        static void Prefix(Rect rect, Pawn pawn, ref bool allowOperations, Thing thingForMedBills)
+        {
+            if (!allowOperations && pawn.Dead && pawn.RaceProps.IsMechanoid)
+            {
+                allowOperations = ITab_Pawn_Health_ShouldAllowOperations.ShouldAllowOperations(pawn);
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(HealthCardUtility), "DrawMedOperationsTab")]
+    static class HealthCardUtility_DrawMedOperationsTab
+    {
+        static bool Prefix(Rect leftRect, Pawn pawn, ref Thing thingForMedBills, float curY, ref float __result)
+        {
+            if (thingForMedBills is Corpse corpse && corpse.InnerPawn.RaceProps.IsMechanoid)
+            {
+                DrawMedOperationsTab(leftRect, pawn, corpse, curY);
+                return false;
+            }
+            return true;
+        }
+
+        private static float DrawMedOperationsTab(Rect leftRect, Pawn pawn, Corpse corspe, float curY)
+        {
+            curY += 2f;
+            Func<List<FloatMenuOption>> recipeOptionsMaker = delegate
+            {
+                List<FloatMenuOption> list = new List<FloatMenuOption>();
+                var map = corspe.Map;
+                foreach (RecipeDef allRecipe in corspe.InnerPawn.def.AllRecipes)
+                {
+                    if (allRecipe.AvailableNow && allRecipe.AvailableOnNow(pawn))
+                    {
+                        IEnumerable<ThingDef> enumerable = allRecipe.PotentiallyMissingIngredients(null, map);
+                        if (!enumerable.Any((ThingDef x) => x.isTechHediff) && !enumerable.Any((ThingDef x) => x.IsDrug) && (!enumerable.Any() || !allRecipe.dontShowIfAnyIngredientMissing))
+                        {
+                            if (allRecipe.targetsBodyPart)
+                            {
+                                foreach (BodyPartRecord item in allRecipe.Worker.GetPartsToApplyOn(pawn, allRecipe))
+                                {
+                                    if (allRecipe.AvailableOnNow(pawn, item))
+                                    {
+                                        list.Add(GenerateSurgeryOption(pawn, corspe, allRecipe, enumerable, item));
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                list.Add(GenerateSurgeryOption(pawn, corspe, allRecipe, enumerable));
+                            }
+                        }
+                    }
+                }
+                return list;
+            };
+            Rect rect = new Rect(leftRect.x - 9f, curY, leftRect.width, leftRect.height - curY - 20f);
+            ((IBillGiver)corspe).BillStack.DoListing(rect, recipeOptionsMaker, ref HealthCardUtility.billsScrollPosition, ref HealthCardUtility.billsScrollHeight);
+            return curY;
+        }
+
+
+        private static FloatMenuOption GenerateSurgeryOption(Pawn pawn, Corpse corpse, RecipeDef recipe, IEnumerable<ThingDef> missingIngredients, BodyPartRecord part = null)
+        {
+            string text = recipe.Worker.GetLabelWhenUsedOn(pawn, part).CapitalizeFirst();
+            if (part != null && !recipe.hideBodyPartNames)
+            {
+                text = text + " (" + part.Label + ")";
+            }
+            FloatMenuOption floatMenuOption;
+            if (missingIngredients.Any())
+            {
+                text += " (";
+                bool flag = true;
+                foreach (ThingDef missingIngredient in missingIngredients)
+                {
+                    if (!flag)
+                    {
+                        text += ", ";
+                    }
+                    flag = false;
+                    text += "MissingMedicalBillIngredient".Translate(missingIngredient.label);
+                }
+                text += ")";
+                floatMenuOption = new FloatMenuOption(text, null);
+            }
+            else
+            {
+                Action action = delegate
+                {
+                    CreateSurgeryBill(corpse, recipe, part);
+                };
+                floatMenuOption = ((recipe.Worker is Recipe_AdministerIngestible) ? 
+                    new FloatMenuOption(text, action, recipe.ingredients.FirstOrDefault()?.FixedIngredient) : 
+                    ((!(recipe.Worker is Recipe_RemoveBodyPart)) ? 
+                    new FloatMenuOption(text, action, null) : new FloatMenuOption(text, action, part.def.spawnThingOnRemoved)));
+            }
+            floatMenuOption.extraPartWidth = 29f;
+            floatMenuOption.extraPartOnGUI = (Rect rect) => Widgets.InfoCardButton(rect.x + 5f, rect.y + (rect.height - 24f) / 2f, recipe);
+            return floatMenuOption;
+        }
+
+        private static void CreateSurgeryBill(Corpse corpse, RecipeDef recipe, BodyPartRecord part)
+        {
+            Bill_Medical bill_Medical = new Bill_Medical(recipe);
+            corpse.BillStack.AddBill(bill_Medical);
+            bill_Medical.Part = part;
+            if (recipe.conceptLearned != null)
+            {
+                PlayerKnowledgeDatabase.KnowledgeDemonstrated(recipe.conceptLearned, KnowledgeAmount.Total);
+            }
+            Map map = corpse.Map;
+            if (!map.mapPawns.FreeColonists.Any((Pawn col) => recipe.PawnSatisfiesSkillRequirements(col)))
+            {
+                Bill.CreateNoPawnsWithSkillDialog(recipe);
+            }
+        }
+    }
+    public class WorkGiver_DoBillHacking : WorkGiver_DoBill
+    {
+
     }
 }
 

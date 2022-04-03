@@ -7,5 +7,6 @@ namespace MechanoidFoundry
     public static class MechanoidFoundryDefOf
     {
         public static ThingDef MF_MechanoidFoundry;
+        public static RecipeDef MF_HackMechanoid;
     }
 }
