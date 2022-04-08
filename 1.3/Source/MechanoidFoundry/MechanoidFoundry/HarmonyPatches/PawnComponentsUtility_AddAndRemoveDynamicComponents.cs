@@ -17,10 +17,6 @@ namespace MechanoidFoundry
         {
             if (pawn.IsMechanoidHacked())
             {
-                if (pawn.drafter is null)
-                {
-                    pawn.drafter = new Pawn_DraftController(pawn);
-                }
                 if (pawn.relations == null)
                 {
                     pawn.relations = new Pawn_RelationsTracker(pawn);

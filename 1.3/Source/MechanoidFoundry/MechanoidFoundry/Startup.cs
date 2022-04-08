@@ -1,6 +1,7 @@
 ﻿using AnimalBehaviours;
 using RimWorld;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
@@ -14,25 +15,37 @@ namespace MechanoidFoundry
 {
     public static class Helpers
     {
+        public static Dictionary<PawnKindDef, bool> cachedResults = new Dictionary<PawnKindDef, bool>();
         public static bool CanBeCreatedAndHacked(this PawnKindDef pawnKindDef)
         {
-            if (pawnKindDef.RaceProps.IsMechanoid)
+            if (!cachedResults.TryGetValue(pawnKindDef, out var result))
             {
-                if (typeof(Machine).IsAssignableFrom(pawnKindDef.race.thingClass)
-                    || pawnKindDef.race.thingClass.FullName.Contains("AIRobot.X2_AIRobot")
-                    || pawnKindDef.race.thingClass.FullName.Contains("ProjectRimFactory.Drones.Pawn_Drone")
-                    || pawnKindDef.defName.Contains("Shuttle"))
+                if (pawnKindDef.RaceProps.IsMechanoid)
                 {
-                    return false;
+                    if (typeof(Machine).IsAssignableFrom(pawnKindDef.race.thingClass)
+                        || pawnKindDef.race.thingClass.FullName.Contains("AIRobot.X2_AIRobot")
+                        || pawnKindDef.race.thingClass.FullName.Contains("ProjectRimFactory.Drones.Pawn_Drone")
+                        || pawnKindDef.defName.Contains("Shuttle"))
+                    {
+                        cachedResults[pawnKindDef] = result = false;
+                    }
+                    else
+                    {
+                        cachedResults[pawnKindDef] = result = true;
+                    }
                 }
-                return true;
+                else
+                {
+                    cachedResults[pawnKindDef] = result = false;
+                }
             }
-            return false;
+            Log.Message(pawnKindDef + " - " + result);
+            return result;
         }
 
         public static bool IsMechanoidHacked(this Pawn pawn)
         {
-            if (pawn.Faction != null && pawn.Faction.IsPlayer && pawn.RaceProps.IsMechanoid)
+            if (pawn.Faction != null && pawn.Faction.IsPlayer && pawn.kindDef.CanBeCreatedAndHacked())
             {
                 return true;
             }
