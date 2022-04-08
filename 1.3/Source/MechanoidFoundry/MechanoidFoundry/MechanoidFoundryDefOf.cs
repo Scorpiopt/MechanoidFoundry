@@ -1,4 +1,8 @@
-﻿using RimWorld;
+﻿using HarmonyLib;
+using RimWorld;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 using Verse;
 
 namespace MechanoidFoundry
@@ -8,5 +12,8 @@ namespace MechanoidFoundry
     {
         public static ThingDef MF_MechanoidFoundry;
         public static RecipeDef MF_HackMechanoid;
+        public static ThingDef MF_MechanoidPad;
+        public static JobDef MF_HaulCorpseToPad;
+        public static WorkGiverDef MF_DoBillsMedicalMechanoidOperation;
     }
 }

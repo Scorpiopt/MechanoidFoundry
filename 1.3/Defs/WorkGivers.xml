@@ -1,6 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 
+  <WorkGiverDef>
+    <defName>MF_DoBillsFabricationBench</defName>
+    <label>make mechanoids</label>
+    <giverClass>WorkGiver_DoBill</giverClass>
+    <workType>Smithing</workType>
+    <priorityInType>50</priorityInType>
+    <fixedBillGiverDefs>
+      <li>MF_MechanoidFoundry</li>
+    </fixedBillGiverDefs>
+    <verb>make mechanoid</verb>
+    <gerund>making mechanoid at</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <prioritizeSustains>true</prioritizeSustains>
+  </WorkGiverDef>
+  
   <WorkTypeDef>
     <defName>MF_Hacking</defName>
     <labelShort>hack</labelShort>
@@ -37,4 +54,11 @@
     <prioritizeSustains>true</prioritizeSustains>
   </WorkGiverDef>
 
+  <JobDef>
+    <defName>MF_HaulCorpseToPad</defName>
+    <driverClass>MechanoidFoundry.JobDriver_HaulCorpseMechanoidToPad</driverClass>
+    <reportString>taking TargetA for hacking.</reportString>
+    <suspendable>false</suspendable>
+    <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
+  </JobDef>
 </Defs>

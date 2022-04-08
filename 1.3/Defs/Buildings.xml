@@ -73,20 +73,56 @@
     </researchPrerequisites>
   </ThingDef>
 
-  <WorkGiverDef>
-    <defName>MF_DoBillsFabricationBench</defName>
-    <label>make mechanoids</label>
-    <giverClass>WorkGiver_DoBill</giverClass>
-    <workType>Smithing</workType>
-    <priorityInType>50</priorityInType>
-    <fixedBillGiverDefs>
-      <li>MF_MechanoidFoundry</li>
-    </fixedBillGiverDefs>
-    <verb>make mechanoid</verb>
-    <gerund>making mechanoid at</gerund>
-    <requiredCapacities>
-      <li>Manipulation</li>
-    </requiredCapacities>
-    <prioritizeSustains>true</prioritizeSustains>
-  </WorkGiverDef>
+  <ThingDef ParentName="BuildingBase">
+    <defName>MF_MechanoidPad</defName>
+    <label>mechanoid pad</label>
+    <description>Mechanoid paid for charging and repairing mechanoids.</description>
+	<thingClass>MechanoidFoundry.Building_MechanoidPad</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Production/MechanoidPad</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(3,3)</drawSize>
+    </graphicData>
+    <castEdgeShadows>false</castEdgeShadows>
+    <costList>
+      <Steel>45</Steel>
+      <Plasteel>30</Plasteel>
+      <ComponentIndustrial>5</ComponentIndustrial>
+      <ComponentSpacer>2</ComponentSpacer>
+    </costList>
+	<rotatable>false</rotatable>
+    <drawGUIOverlay>True</drawGUIOverlay>
+    <altitudeLayer>Building</altitudeLayer>
+    <fillPercent>0.5</fillPercent>
+    <useHitPoints>True</useHitPoints>
+    <statBases>
+      <WorkToBuild>4000</WorkToBuild>
+      <MaxHitPoints>200</MaxHitPoints>
+      <Flammability>1.0</Flammability>
+    </statBases>
+    <size>(3,3)</size>
+    <passability>PassThroughOnly</passability>
+    <pathCost>70</pathCost>
+    <designationCategory>Misc</designationCategory>
+    <surfaceType>Item</surfaceType>
+	<comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <shortCircuitInRain>true</shortCircuitInRain>
+        <basePowerConsumption>100</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+	  <li Class="CompProperties_Forbiddable" />
+      <li Class="CompProperties_AssignableToPawn">
+        <drawAssignmentOverlay>false</drawAssignmentOverlay>
+        <compClass>CompAssignableToPawn_Bed</compClass>
+      </li>
+    </comps>
+	<building>
+		<bed_humanlike>false</bed_humanlike>
+		<bed_showSleeperBody>True</bed_showSleeperBody>
+		<canPlaceOverImpassablePlant>false</canPlaceOverImpassablePlant>
+		<ai_chillDestination>false</ai_chillDestination>
+	</building>
+  </ThingDef>
 </Defs>
