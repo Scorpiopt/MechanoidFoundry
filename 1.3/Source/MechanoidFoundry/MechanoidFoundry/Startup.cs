@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Verse;
 using Verse.AI;
+using VFE.Mechanoids;
 using VFEMech;
 
 namespace MechanoidFoundry
@@ -39,7 +40,6 @@ namespace MechanoidFoundry
                     cachedResults[pawnKindDef] = result = false;
                 }
             }
-            Log.Message(pawnKindDef + " - " + result);
             return result;
         }
 
@@ -72,13 +72,15 @@ namespace MechanoidFoundry
                 return false;
             });
         }
-
-        public static bool OnMechanoidPad(this Pawn pawn)
+        
+        public static bool OnMechanoidPad(this Pawn pawn, out bool padIsActive)
         {
             if (pawn.CurrentBed() != null && pawn.CurrentBed() is Building_MechanoidPad curBed && curBed == pawn.ownership.OwnedBed)
             {
+                padIsActive = curBed.IsActive;
                 return true;
             }
+            padIsActive = false;
             return false;
         }
     }
@@ -92,21 +94,37 @@ namespace MechanoidFoundry
             {
                 if (pawn.CanBeCreatedAndHacked())
                 {
-                    if (pawn.race?.race?.corpseDef != null)
+                    var draftableCompProps = pawn.race.GetCompProperties<CompProperties_Draftable>();
+                    if (draftableCompProps is null)
                     {
-                        var compProps = pawn.race.GetCompProperties<CompProperties_Draftable>();
-                        if (compProps is null)
+                        pawn.race.comps.Add(new CompProperties_Draftable());
+                    }
+                    var compMachineProps = pawn.race.GetCompProperties<CompProperties_Machine>();
+                    if (compMachineProps is null)
+                    {
+                        pawn.race.comps.Add(new CompProperties_Machine
                         {
-                            Log.Message("Adding draftability comp to " + pawn);
-                            pawn.race.comps.Add(new CompProperties_Draftable());
-                        }
-                        pawn.race.AllRecipes.Add(MechanoidFoundryDefOf.MF_HackMechanoid);
-                        pawn.race.race.corpseDef.recipes.Add(MechanoidFoundryDefOf.MF_HackMechanoid);
+                            violent = true,
+                            hoursActive = 100 * pawn.race.race.baseBodySize,
+                            compClass = typeof(CompMachine)
+                        });
                     }
-                    else
+                    var modExtension = pawn.race.GetModExtension<MechanoidExtension>();
+                    if (modExtension is null)
                     {
-                        Log.Message(pawn + " doesn't have corpse def defined, cannot make it hackable.");
+                        if (pawn.race.modExtensions is null)
+                        {
+                            pawn.race.modExtensions = new List<DefModExtension>();
+                        }
+                        pawn.race.modExtensions.Add(new MechanoidExtension
+                        {
+                            isCaravanRiddable = true,
+                            hasPowerNeedWhenHacked = true,
+                        });
                     }
+
+                    pawn.race.AllRecipes.Add(MechanoidFoundryDefOf.MF_HackMechanoid);
+                    pawn.race.race.corpseDef.recipes.Add(MechanoidFoundryDefOf.MF_HackMechanoid);
                 }
             }
         }

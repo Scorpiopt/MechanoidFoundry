@@ -117,6 +117,12 @@
         <drawAssignmentOverlay>false</drawAssignmentOverlay>
         <compClass>CompAssignableToPawn_Bed</compClass>
       </li>
+	  <li Class="VFE.Mechanoids.CompProperties_MachineChargingStation">
+		<compClass>MechanoidFoundry.CompMechanoidPad</compClass>
+		<extraChargingPower>1400</extraChargingPower>
+		<hoursToRecharge>24</hoursToRecharge>
+		<killPawnAfterDestroying>false</killPawnAfterDestroying>
+	  </li>
     </comps>
 	<building>
 		<bed_humanlike>false</bed_humanlike>

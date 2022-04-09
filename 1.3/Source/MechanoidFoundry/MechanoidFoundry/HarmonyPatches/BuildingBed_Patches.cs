@@ -6,6 +6,7 @@ using System.Linq;
 using UnityEngine;
 using Verse;
 using Verse.AI;
+using VFE.Mechanoids;
 
 namespace MechanoidFoundry
 {
@@ -121,7 +122,7 @@ namespace MechanoidFoundry
 
             if (HealthAIUtility.ShouldSeekMedicalRest(sleeper))
             {
-                if (sleeper.OnMechanoidPad())
+                if (sleeper.OnMechanoidPad(out _))
                 {
                     __result = sleeper.CurrentBed();
                     return false;
@@ -187,6 +188,36 @@ namespace MechanoidFoundry
                 }
             }
             return true;
+        }
+    }
+
+    [HarmonyPatch(typeof(CompAssignableToPawn_Bed), "TryAssignPawn")]
+    class CompAssignableToPawn_Bed_TryAssignPawn
+    {
+        static void Postfix(CompAssignableToPawn_Bed __instance, Pawn pawn)
+        {
+            if (__instance.parent is Building_MechanoidPad pad && pawn.IsMechanoidHacked())
+            {
+                var comp = pad.GetComp<CompMachineChargingStation>();
+                comp.myPawn = pawn;
+                var comp2 = pawn.GetComp<CompMachine>();
+                comp2.myBuilding = pad;
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(CompAssignableToPawn_Bed), "TryUnassignPawn")]
+    class CompAssignableToPawn_Bed_TryUnassignPawn
+    {
+        static void Postfix(CompAssignableToPawn_Bed __instance, Pawn pawn)
+        {
+            if (__instance.parent is Building_MechanoidPad pad && pawn.IsMechanoidHacked())
+            {
+                var comp = pad.GetComp<CompMachineChargingStation>();
+                comp.myPawn = null;
+                var comp2 = pawn.GetComp<CompMachine>();
+                comp2.myBuilding = null;
+            }
         }
     }
 }

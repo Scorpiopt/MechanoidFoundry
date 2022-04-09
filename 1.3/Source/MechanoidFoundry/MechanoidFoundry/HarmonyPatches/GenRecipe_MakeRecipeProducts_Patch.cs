@@ -39,6 +39,7 @@ namespace MechanoidFoundry
             {
                 pawn.equipment.AddEquipment(eq);
             }
+            pawn.needs.AddOrRemoveNeedsAsAppropriate();
         }
     }
 }

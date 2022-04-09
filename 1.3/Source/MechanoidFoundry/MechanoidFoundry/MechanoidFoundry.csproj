@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Building_MechanoidPad.cs" />
+    <Compile Include="CompMechanoidPad.cs" />
     <Compile Include="HarmonyPatches\BuildingBed_Patches.cs" />
     <Compile Include="HarmonyPatches\GenDraw_DrawInteractionCell_Patch.cs" />
     <Compile Include="HarmonyPatches\GenerateImpliedDefs_PreResolve_Patch.cs" />
@@ -54,17 +55,19 @@
     <Compile Include="HarmonyPatches\HealthCardUtility_DrawHealthSummary.cs" />
     <Compile Include="HarmonyPatches\HealthCardUtility_DrawMedOperationsTab.cs" />
     <Compile Include="HarmonyPatches\HealthCardUtility_DrawPawnHealthCard.cs" />
+    <Compile Include="HarmonyPatches\ITab_Pawn_Character_IsVisible_Patch.cs" />
     <Compile Include="HarmonyPatches\ITab_Pawn_Health_ShouldAllowOperations.cs" />
+    <Compile Include="HarmonyPatches\JobGiver_Recharge_TryGiveJob.cs" />
     <Compile Include="HarmonyPatches\PawnComponentsUtility_AddAndRemoveDynamicComponents.cs" />
     <Compile Include="HarmonyPatches\PawnUIOverlay_DrawPawnGUIOverlay.cs" />
     <Compile Include="HarmonyPatches\Pawn_EquipmentTracker_DestroyEquipment.cs" />
     <Compile Include="HarmonyPatches\Pawn_EquipmentTracker_DropAllEquipment.cs" />
     <Compile Include="HarmonyPatches\StatWorker_IsDisabledFor.cs" />
+    <Compile Include="MechanoidFoundryDefOf.cs" />
     <Compile Include="MechanoidFoundryMod.cs" />
     <Compile Include="Recipes\RecipeHackMechanoid.cs" />
     <Compile Include="Recipes\RecipeMakeMechanoid.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="MechanoidFoundryDefOf.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorkGiver_DoBillHacking.cs" />
   </ItemGroup>

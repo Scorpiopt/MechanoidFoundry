@@ -1,6 +1,9 @@
 ﻿using HarmonyLib;
 using RimWorld;
+using System.Diagnostics;
+using UnityEngine;
 using Verse;
+using VFEMech;
 
 namespace MechanoidFoundry
 {

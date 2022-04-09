@@ -3,10 +3,70 @@ using RimWorld;
 using System.Collections.Generic;
 using UnityEngine;
 using Verse;
+using Verse.AI;
 using VFEMech;
 
 namespace MechanoidFoundry
 {
+    [HarmonyPatch(typeof(WorkGiver_ConstructDeliverResources), "ResetStaticData")]
+    public static class WorkGiver_ConstructDeliverResources_ResetStaticData_Patch
+    {
+        public static void Postfix()
+        {
+            CreateMechComponents();
+        }
+        public static void CreateMechComponents()
+        {
+            foreach (var pawn in DefDatabase<PawnKindDef>.AllDefs)
+            {
+                if (pawn.CanBeCreatedAndHacked())
+                {
+                    if (!pawn.race.race.thinkTreeMain.thinkRoot.subNodes.Any(x => x is ThinkNode_Subtree subtree
+                         && subtree.treeDef == MechanoidFoundryDefOf.VFE_MainMachineBehaviourViolentActive))
+                    {
+                        if (pawn.race.race.thinkTreeConstant != null)
+                        {
+                            Log.Error("Couldn't make " + pawn + " caravan riddable because of existing thinktree " + pawn.race.race.thinkTreeConstant
+                                + ". Report about it on Mechanoid Foundry steam page.");
+                        }
+                        else
+                        {
+                            pawn.race.race.thinkTreeConstant = MechanoidFoundryDefOf.VFE_Mechanoids_Machine_RiddableConstant;
+                        }
+
+                        var index = pawn.race.race.thinkTreeMain.thinkRoot.subNodes.FindIndex(x => x is ThinkNode_Subtree subtree
+                            && subtree.treeDef == MechanoidFoundryDefOf.Downed);
+                        if (index >= 0)
+                        {
+                            var toAdd = new ThinkNode_Subtree
+                            {
+                                treeDef = MechanoidFoundryDefOf.VFE_MainMachineBehaviourViolentActive,
+                            };
+                            if (index + 1 < pawn.race.race.thinkTreeMain.thinkRoot.subNodes.Count)
+                            {
+                                pawn.race.race.thinkTreeMain.thinkRoot.subNodes.Insert(index + 1, toAdd);
+                            }
+                            else
+                            {
+                                pawn.race.race.thinkTreeMain.thinkRoot.subNodes.Add(toAdd);
+                            }
+                        }
+                        else
+                        {
+                            Log.Error("Couldn't make " + pawn + " caravan riddable because of missing Downed treeNode" + pawn.race.race.thinkTreeMain
+                                + ". Report about it on Mechanoid Foundry steam page.");
+                        }
+                        //for (var i = 0; i < pawn.race.race.thinkTreeMain.thinkRoot.subNodes.Count; i++)
+                        //{
+                        //    var node = pawn.race.race.thinkTreeMain.thinkRoot.subNodes[i];
+                        //    Log.Message(i + " Node: " + node + " - " + (node as ThinkNode_Subtree)?.treeDef + " - " + pawn.race.race.thinkTreeMain);
+                        //}
+                    }
+                }
+            }
+        }
+    }
+
     [HarmonyPatch(typeof(DefGenerator), "GenerateImpliedDefs_PreResolve")]
     public static class GenerateImpliedDefs_PreResolve_Patch
     {
