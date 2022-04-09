@@ -33,11 +33,33 @@ namespace MechanoidFoundry
             //    }
             //    catch { }
             //}
+            //
+            //var postfix3 = AccessTools.Method(typeof(MechanoidFoundryMod), "Postfix3");
+            //foreach (var type3 in typeof(WorkGiver_Scanner).AllSubclassesNonAbstract())
+            //{
+            //    var methodToPatch3 = AccessTools.Method(type3, "HasJobOnThing");
+            //    try
+            //    {
+            //        harmony.Patch(methodToPatch3, new HarmonyMethod(postfix3));
+            //    }
+            //    catch { }
+            //}
+            //
+            //var postfix4 = AccessTools.Method(typeof(MechanoidFoundryMod), "Postfix4");
+            //foreach (var type3 in typeof(WorkGiver_Scanner).AllSubclassesNonAbstract())
+            //{
+            //    var methodToPatch3 = AccessTools.Method(type3, "JobOnThing");
+            //    try
+            //    {
+            //        harmony.Patch(methodToPatch3, new HarmonyMethod(postfix4));
+            //    }
+            //    catch { }
+            //}
         }
 
         //private static void Postfix(ThinkNode __instance, ThinkResult __result, Pawn pawn, JobIssueParams jobParams)
         //{
-        //    if (pawn.IsMechanoidHacked())
+        //    if (pawn.IsColonist)
         //    {
         //        Log.Message(pawn + " gets " + __result.Job + " from " + __instance);
         //        if (__instance is ThinkNode_Subtree subtree)
@@ -49,7 +71,23 @@ namespace MechanoidFoundry
         //
         //private static void Postfix2(ThinkNode_Conditional __instance, bool __result, Pawn pawn)
         //{
-        //    if (pawn.IsMechanoidHacked())
+        //    if (pawn.IsColonist)
+        //    {
+        //        Log.Message(pawn + " gets " + __result + " from " + __instance);
+        //    }
+        //}
+        //
+        //private static void Postfix3(WorkGiver_Scanner __instance, bool __result, Pawn pawn)
+        //{
+        //    if (pawn.IsColonist)
+        //    {
+        //        Log.Message(pawn + " gets " + __result + " from " + __instance);
+        //    }
+        //}
+        //
+        //private static void Postfix4(WorkGiver_Scanner __instance, Job __result, Pawn pawn)
+        //{
+        //    if (pawn.IsColonist)
         //    {
         //        Log.Message(pawn + " gets " + __result + " from " + __instance);
         //    }
@@ -61,7 +99,7 @@ namespace MechanoidFoundry
     //{
     //    private static void Postfix(Pawn_JobTracker __instance, Pawn ___pawn, Job newJob, JobTag? tag)
     //    {
-    //        if (___pawn.IsMechanoidHacked())
+    //        if (___pawn.IsColonist)
     //        {
     //            Log.Message(___pawn + " is starting " + newJob);
     //        }
@@ -74,7 +112,7 @@ namespace MechanoidFoundry
     //{
     //    private static void Prefix(Pawn_JobTracker __instance, Pawn ___pawn, JobCondition condition, ref bool startNewJob, bool canReturnToPool = true)
     //    {
-    //        if (___pawn.IsMechanoidHacked())
+    //        if (___pawn.IsColonist)
     //        {
     //            Log.Message(___pawn + " is ending " + ___pawn.CurJob);
     //        }
@@ -86,19 +124,10 @@ namespace MechanoidFoundry
     //{
     //    private static void Postfix(ThinkNode_JobGiver __instance, ThinkResult __result, Pawn pawn, JobIssueParams jobParams)
     //    {
-    //        if (pawn.IsMechanoidHacked())
+    //        if (pawn.IsColonist)
     //        {
     //            Log.Message(pawn + " gets " + __result.Job + " from " + __instance);
     //        }
-    //    }
-    //}
-    //
-    //[HarmonyPatch(typeof(Pawn_DraftController), "Drafted", MethodType.Setter)]
-    //static class Pawn_DraftController_Drafted
-    //{
-    //    static void Postfix(Pawn_DraftController __instance, bool value)
-    //    {
-    //        Log.Message(Time.frameCount + " setting to " + value + " - " + new StackTrace());
     //    }
     //}
 }

@@ -90,6 +90,15 @@ namespace MechanoidFoundry
     {
         static Startup()
         {
+            var recipesToInstallOnMechanoids = new List<RecipeDef>();
+            foreach (var recipe in DefDatabase<RecipeDef>.AllDefs)
+            {
+                var extension = recipe.GetModExtension<RecipeInstallOnHackableMechanoid>();
+                if (extension != null)
+                {
+                    recipesToInstallOnMechanoids.Add(recipe);
+                }
+            }
             foreach (var pawn in DefDatabase<PawnKindDef>.AllDefs)
             {
                 if (pawn.CanBeCreatedAndHacked())
@@ -121,6 +130,12 @@ namespace MechanoidFoundry
                             isCaravanRiddable = true,
                             hasPowerNeedWhenHacked = true,
                         });
+                    }
+
+                    foreach (var recipe in recipesToInstallOnMechanoids)
+                    {
+                        Log.Message("Adding recipe " + recipe + " to " + pawn);
+                        pawn.race.AllRecipes.Add(recipe);
                     }
 
                     pawn.race.AllRecipes.Add(MechanoidFoundryDefOf.MF_HackMechanoid);

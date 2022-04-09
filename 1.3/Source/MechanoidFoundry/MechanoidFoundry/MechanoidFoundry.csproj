@@ -62,9 +62,11 @@
     <Compile Include="HarmonyPatches\PawnUIOverlay_DrawPawnGUIOverlay.cs" />
     <Compile Include="HarmonyPatches\Pawn_EquipmentTracker_DestroyEquipment.cs" />
     <Compile Include="HarmonyPatches\Pawn_EquipmentTracker_DropAllEquipment.cs" />
+    <Compile Include="HarmonyPatches\Pawn_HealthTracker_HealthTick.cs" />
     <Compile Include="HarmonyPatches\StatWorker_IsDisabledFor.cs" />
     <Compile Include="MechanoidFoundryDefOf.cs" />
     <Compile Include="MechanoidFoundryMod.cs" />
+    <Compile Include="Recipes\RecipeModifyMechanoid.cs" />
     <Compile Include="Recipes\RecipeHackMechanoid.cs" />
     <Compile Include="Recipes\RecipeMakeMechanoid.cs" />
     <Compile Include="Startup.cs" />
