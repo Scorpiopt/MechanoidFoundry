@@ -134,7 +134,6 @@ namespace MechanoidFoundry
 
                     foreach (var recipe in recipesToInstallOnMechanoids)
                     {
-                        Log.Message("Adding recipe " + recipe + " to " + pawn);
                         pawn.race.AllRecipes.Add(recipe);
                     }
 
