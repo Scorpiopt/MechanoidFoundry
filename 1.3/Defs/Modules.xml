@@ -9,11 +9,11 @@
 			<li>TableMachining</li>
 		</recipeUsers>
 	</RecipeDef>
-	
+
 	<HediffDef Name="MF_MechanoidModification_Base" Abstract="True">
 		<hediffClass>MechanoidFoundry.Hediff_MechanoidModification</hediffClass>
 	</HediffDef>
-  
+
 	<RecipeDef ParentName="MF_Craft_Module_Base">
 		<defName>MF_Craft_HaulingModule</defName>
 		<label>craft hauling module</label>
@@ -50,7 +50,7 @@
 		</skillRequirements>
 		<workSkill>Crafting</workSkill>
 	</RecipeDef>
-	
+
 	<RecipeDef>
 		<defName>MF_InstallHaulingModule</defName>
 		<label>install hauling module</label>
@@ -62,7 +62,7 @@
 			<Crafting>5</Crafting>
 			<Intellectual>5</Intellectual>
 		</skillRequirements>
-		<workSkill>Intellectual</workSkill>
+		<workSkill>Crafting</workSkill>
 		<ingredients>
 			<li>
 				<filter>
@@ -76,10 +76,10 @@
 		<targetsBodyPart>false</targetsBodyPart>
 		<addsHediff>MF_HaulingModule</addsHediff>
 		<modExtensions>
-			<li Class="MechanoidFoundry.RecipeInstallOnHackableMechanoid"></li>
+			<li Class="MechanoidFoundry.RecipeInstallOnHackableMechanoid"/>
 		</modExtensions>
 	</RecipeDef>
-	
+
 	<ThingDef ParentName="BodyPartBase">
 		<defName>MF_HaulingModule</defName>
 		<label>hauling module</label>
@@ -106,7 +106,7 @@
 			<li>Manufactured</li>
 		</thingCategories>
 	</ThingDef>
-	
+
 	<HediffDef ParentName="MF_MechanoidModification_Base">
 		<defName>MF_HaulingModule</defName>
 		<label>hauling module</label>
@@ -122,7 +122,6 @@
 			</li>
 		</modExtensions>
 	</HediffDef>
-	
 
 	<RecipeDef ParentName="MF_Craft_Module_Base">
 		<defName>MF_Craft_FirefighterModule</defName>
@@ -160,7 +159,7 @@
 		</skillRequirements>
 		<workSkill>Crafting</workSkill>
 	</RecipeDef>
-	
+
 	<RecipeDef>
 		<defName>MF_InstallFirefighterModule</defName>
 		<label>install firefighter module</label>
@@ -172,7 +171,7 @@
 			<Crafting>5</Crafting>
 			<Intellectual>5</Intellectual>
 		</skillRequirements>
-		<workSkill>Intellectual</workSkill>
+		<workSkill>Crafting</workSkill>
 		<ingredients>
 			<li>
 				<filter>
@@ -186,10 +185,10 @@
 		<targetsBodyPart>false</targetsBodyPart>
 		<addsHediff>MF_FirefighterModule</addsHediff>
 		<modExtensions>
-			<li Class="MechanoidFoundry.RecipeInstallOnHackableMechanoid"></li>
+			<li Class="MechanoidFoundry.RecipeInstallOnHackableMechanoid"/>
 		</modExtensions>
 	</RecipeDef>
-	
+
 	<ThingDef ParentName="BodyPartBase">
 		<defName>MF_FirefighterModule</defName>
 		<label>firefighter module</label>
@@ -216,7 +215,7 @@
 			<li>Manufactured</li>
 		</thingCategories>
 	</ThingDef>
-	
+
 	<HediffDef ParentName="MF_MechanoidModification_Base">
 		<defName>MF_FirefighterModule</defName>
 		<label>firefighter module</label>
@@ -232,7 +231,7 @@
 			</li>
 		</modExtensions>
 	</HediffDef>
-	
+
 
 	<RecipeDef ParentName="MF_Craft_Module_Base">
 		<defName>MF_Craft_DoctorModule</defName>
@@ -270,7 +269,7 @@
 		</skillRequirements>
 		<workSkill>Crafting</workSkill>
 	</RecipeDef>
-	
+
 	<RecipeDef>
 		<defName>MF_InstallDoctorModule</defName>
 		<label>install doctor module</label>
@@ -282,7 +281,7 @@
 			<Crafting>5</Crafting>
 			<Intellectual>5</Intellectual>
 		</skillRequirements>
-		<workSkill>Intellectual</workSkill>
+		<workSkill>Crafting</workSkill>
 		<ingredients>
 			<li>
 				<filter>
@@ -296,10 +295,10 @@
 		<targetsBodyPart>false</targetsBodyPart>
 		<addsHediff>MF_DoctorModule</addsHediff>
 		<modExtensions>
-			<li Class="MechanoidFoundry.RecipeInstallOnHackableMechanoid"></li>
+			<li Class="MechanoidFoundry.RecipeInstallOnHackableMechanoid"/>
 		</modExtensions>
 	</RecipeDef>
-	
+
 	<ThingDef ParentName="BodyPartBase">
 		<defName>MF_DoctorModule</defName>
 		<label>doctor module</label>
@@ -326,7 +325,7 @@
 			<li>Manufactured</li>
 		</thingCategories>
 	</ThingDef>
-	
+
 	<HediffDef ParentName="MF_MechanoidModification_Base">
 		<defName>MF_DoctorModule</defName>
 		<label>doctor module</label>
@@ -379,7 +378,7 @@
 		</skillRequirements>
 		<workSkill>Crafting</workSkill>
 	</RecipeDef>
-	
+
 	<RecipeDef>
 		<defName>MF_InstallCookingModule</defName>
 		<label>install cooking module</label>
@@ -391,7 +390,7 @@
 			<Crafting>5</Crafting>
 			<Intellectual>5</Intellectual>
 		</skillRequirements>
-		<workSkill>Intellectual</workSkill>
+		<workSkill>Crafting</workSkill>
 		<ingredients>
 			<li>
 				<filter>
@@ -405,10 +404,10 @@
 		<targetsBodyPart>false</targetsBodyPart>
 		<addsHediff>MF_CookingModule</addsHediff>
 		<modExtensions>
-			<li Class="MechanoidFoundry.RecipeInstallOnHackableMechanoid"></li>
+			<li Class="MechanoidFoundry.RecipeInstallOnHackableMechanoid"/>
 		</modExtensions>
 	</RecipeDef>
-	
+
 	<ThingDef ParentName="BodyPartBase">
 		<defName>MF_CookingModule</defName>
 		<label>cooking module</label>
@@ -435,7 +434,7 @@
 			<li>Manufactured</li>
 		</thingCategories>
 	</ThingDef>
-	
+
 	<HediffDef ParentName="MF_MechanoidModification_Base">
 		<defName>MF_CookingModule</defName>
 		<label>cooking module</label>
@@ -451,7 +450,7 @@
 			</li>
 		</modExtensions>
 	</HediffDef>
-	
+
 
 	<RecipeDef ParentName="MF_Craft_Module_Base">
 		<defName>MF_Craft_HuntingModule</defName>
@@ -489,7 +488,7 @@
 		</skillRequirements>
 		<workSkill>Crafting</workSkill>
 	</RecipeDef>
-	
+
 	<RecipeDef>
 		<defName>MF_InstallHuntingModule</defName>
 		<label>install hunting module</label>
@@ -501,7 +500,7 @@
 			<Crafting>5</Crafting>
 			<Intellectual>5</Intellectual>
 		</skillRequirements>
-		<workSkill>Intellectual</workSkill>
+		<workSkill>Crafting</workSkill>
 		<ingredients>
 			<li>
 				<filter>
@@ -515,10 +514,10 @@
 		<targetsBodyPart>false</targetsBodyPart>
 		<addsHediff>MF_HuntingModule</addsHediff>
 		<modExtensions>
-			<li Class="MechanoidFoundry.RecipeInstallOnHackableMechanoid"></li>
+			<li Class="MechanoidFoundry.RecipeInstallOnHackableMechanoid"/>
 		</modExtensions>
 	</RecipeDef>
-	
+
 	<ThingDef ParentName="BodyPartBase">
 		<defName>MF_HuntingModule</defName>
 		<label>hunting module</label>
@@ -545,7 +544,7 @@
 			<li>Manufactured</li>
 		</thingCategories>
 	</ThingDef>
-	
+
 	<HediffDef ParentName="MF_MechanoidModification_Base">
 		<defName>MF_HuntingModule</defName>
 		<label>hunting module</label>
@@ -561,7 +560,7 @@
 			</li>
 		</modExtensions>
 	</HediffDef>
-	
+
 
 	<RecipeDef ParentName="MF_Craft_Module_Base">
 		<defName>MF_Craft_ConstructionModule</defName>
@@ -599,7 +598,7 @@
 		</skillRequirements>
 		<workSkill>Crafting</workSkill>
 	</RecipeDef>
-	
+
 	<RecipeDef>
 		<defName>MF_InstallConstructionModule</defName>
 		<label>install construction module</label>
@@ -611,7 +610,7 @@
 			<Crafting>5</Crafting>
 			<Intellectual>5</Intellectual>
 		</skillRequirements>
-		<workSkill>Intellectual</workSkill>
+		<workSkill>Crafting</workSkill>
 		<ingredients>
 			<li>
 				<filter>
@@ -625,10 +624,10 @@
 		<targetsBodyPart>false</targetsBodyPart>
 		<addsHediff>MF_ConstructionModule</addsHediff>
 		<modExtensions>
-			<li Class="MechanoidFoundry.RecipeInstallOnHackableMechanoid"></li>
+			<li Class="MechanoidFoundry.RecipeInstallOnHackableMechanoid"/>
 		</modExtensions>
 	</RecipeDef>
-	
+
 	<ThingDef ParentName="BodyPartBase">
 		<defName>MF_ConstructionModule</defName>
 		<label>construction module</label>
@@ -655,7 +654,7 @@
 			<li>Manufactured</li>
 		</thingCategories>
 	</ThingDef>
-	
+
 	<HediffDef ParentName="MF_MechanoidModification_Base">
 		<defName>MF_ConstructionModule</defName>
 		<label>construction module</label>
@@ -671,7 +670,7 @@
 			</li>
 		</modExtensions>
 	</HediffDef>
-	
+
 
 	<RecipeDef ParentName="MF_Craft_Module_Base">
 		<defName>MF_Craft_GrowingModule</defName>
@@ -709,7 +708,7 @@
 		</skillRequirements>
 		<workSkill>Crafting</workSkill>
 	</RecipeDef>
-	
+
 	<RecipeDef>
 		<defName>MF_InstallGrowingModule</defName>
 		<label>install growing module</label>
@@ -721,7 +720,7 @@
 			<Crafting>5</Crafting>
 			<Intellectual>5</Intellectual>
 		</skillRequirements>
-		<workSkill>Intellectual</workSkill>
+		<workSkill>Crafting</workSkill>
 		<ingredients>
 			<li>
 				<filter>
@@ -735,10 +734,10 @@
 		<targetsBodyPart>false</targetsBodyPart>
 		<addsHediff>MF_GrowingModule</addsHediff>
 		<modExtensions>
-			<li Class="MechanoidFoundry.RecipeInstallOnHackableMechanoid"></li>
+			<li Class="MechanoidFoundry.RecipeInstallOnHackableMechanoid"/>
 		</modExtensions>
 	</RecipeDef>
-	
+
 	<ThingDef ParentName="BodyPartBase">
 		<defName>MF_GrowingModule</defName>
 		<label>growing module</label>
@@ -765,7 +764,7 @@
 			<li>Manufactured</li>
 		</thingCategories>
 	</ThingDef>
-	
+
 	<HediffDef ParentName="MF_MechanoidModification_Base">
 		<defName>MF_GrowingModule</defName>
 		<label>growing module</label>
@@ -781,7 +780,7 @@
 			</li>
 		</modExtensions>
 	</HediffDef>
-	
+
 
 	<RecipeDef ParentName="MF_Craft_Module_Base">
 		<defName>MF_Craft_MiningModule</defName>
@@ -819,7 +818,7 @@
 		</skillRequirements>
 		<workSkill>Crafting</workSkill>
 	</RecipeDef>
-	
+
 	<RecipeDef>
 		<defName>MF_InstallMiningModule</defName>
 		<label>install mining module</label>
@@ -831,7 +830,7 @@
 			<Crafting>5</Crafting>
 			<Intellectual>5</Intellectual>
 		</skillRequirements>
-		<workSkill>Intellectual</workSkill>
+		<workSkill>Crafting</workSkill>
 		<ingredients>
 			<li>
 				<filter>
@@ -845,10 +844,10 @@
 		<targetsBodyPart>false</targetsBodyPart>
 		<addsHediff>MF_MiningModule</addsHediff>
 		<modExtensions>
-			<li Class="MechanoidFoundry.RecipeInstallOnHackableMechanoid"></li>
+			<li Class="MechanoidFoundry.RecipeInstallOnHackableMechanoid"/>
 		</modExtensions>
 	</RecipeDef>
-	
+
 	<ThingDef ParentName="BodyPartBase">
 		<defName>MF_MiningModule</defName>
 		<label>mining module</label>
@@ -875,7 +874,7 @@
 			<li>Manufactured</li>
 		</thingCategories>
 	</ThingDef>
-	
+
 	<HediffDef ParentName="MF_MechanoidModification_Base">
 		<defName>MF_MiningModule</defName>
 		<label>mining module</label>
@@ -891,7 +890,7 @@
 			</li>
 		</modExtensions>
 	</HediffDef>
-	
+
 
 	<RecipeDef ParentName="MF_Craft_Module_Base">
 		<defName>MF_Craft_PlantCuttingModule</defName>
@@ -929,7 +928,7 @@
 		</skillRequirements>
 		<workSkill>Crafting</workSkill>
 	</RecipeDef>
-	
+
 	<RecipeDef>
 		<defName>MF_InstallPlantCuttingModule</defName>
 		<label>install plant cutting module</label>
@@ -941,7 +940,7 @@
 			<Crafting>5</Crafting>
 			<Intellectual>5</Intellectual>
 		</skillRequirements>
-		<workSkill>Intellectual</workSkill>
+		<workSkill>Crafting</workSkill>
 		<ingredients>
 			<li>
 				<filter>
@@ -955,10 +954,10 @@
 		<targetsBodyPart>false</targetsBodyPart>
 		<addsHediff>MF_PlantCuttingModule</addsHediff>
 		<modExtensions>
-			<li Class="MechanoidFoundry.RecipeInstallOnHackableMechanoid"></li>
+			<li Class="MechanoidFoundry.RecipeInstallOnHackableMechanoid"/>
 		</modExtensions>
 	</RecipeDef>
-	
+
 	<ThingDef ParentName="BodyPartBase">
 		<defName>MF_PlantCuttingModule</defName>
 		<label>plant cutting module</label>
@@ -985,7 +984,7 @@
 			<li>Manufactured</li>
 		</thingCategories>
 	</ThingDef>
-	
+
 	<HediffDef ParentName="MF_MechanoidModification_Base">
 		<defName>MF_PlantCuttingModule</defName>
 		<label>plant cutting module</label>
@@ -1001,7 +1000,7 @@
 			</li>
 		</modExtensions>
 	</HediffDef>
-	
+
 
 	<RecipeDef ParentName="MF_Craft_Module_Base">
 		<defName>MF_Craft_SmithingModule</defName>
@@ -1039,7 +1038,7 @@
 		</skillRequirements>
 		<workSkill>Crafting</workSkill>
 	</RecipeDef>
-	
+
 	<RecipeDef>
 		<defName>MF_InstallSmithingModule</defName>
 		<label>install smithing module</label>
@@ -1051,7 +1050,7 @@
 			<Crafting>5</Crafting>
 			<Intellectual>5</Intellectual>
 		</skillRequirements>
-		<workSkill>Intellectual</workSkill>
+		<workSkill>Crafting</workSkill>
 		<ingredients>
 			<li>
 				<filter>
@@ -1065,10 +1064,10 @@
 		<targetsBodyPart>false</targetsBodyPart>
 		<addsHediff>MF_SmithingModule</addsHediff>
 		<modExtensions>
-			<li Class="MechanoidFoundry.RecipeInstallOnHackableMechanoid"></li>
+			<li Class="MechanoidFoundry.RecipeInstallOnHackableMechanoid"/>
 		</modExtensions>
 	</RecipeDef>
-	
+
 	<ThingDef ParentName="BodyPartBase">
 		<defName>MF_SmithingModule</defName>
 		<label>smithing module</label>
@@ -1095,7 +1094,7 @@
 			<li>Manufactured</li>
 		</thingCategories>
 	</ThingDef>
-	
+
 	<HediffDef ParentName="MF_MechanoidModification_Base">
 		<defName>MF_SmithingModule</defName>
 		<label>smithing module</label>
@@ -1111,7 +1110,7 @@
 			</li>
 		</modExtensions>
 	</HediffDef>
-	
+
 
 	<RecipeDef ParentName="MF_Craft_Module_Base">
 		<defName>MF_Craft_TailoringModule</defName>
@@ -1149,7 +1148,7 @@
 		</skillRequirements>
 		<workSkill>Crafting</workSkill>
 	</RecipeDef>
-	
+
 	<RecipeDef>
 		<defName>MF_InstallTailoringModule</defName>
 		<label>install tailoring module</label>
@@ -1161,7 +1160,7 @@
 			<Crafting>5</Crafting>
 			<Intellectual>5</Intellectual>
 		</skillRequirements>
-		<workSkill>Intellectual</workSkill>
+		<workSkill>Crafting</workSkill>
 		<ingredients>
 			<li>
 				<filter>
@@ -1175,10 +1174,10 @@
 		<targetsBodyPart>false</targetsBodyPart>
 		<addsHediff>MF_TailoringModule</addsHediff>
 		<modExtensions>
-			<li Class="MechanoidFoundry.RecipeInstallOnHackableMechanoid"></li>
+			<li Class="MechanoidFoundry.RecipeInstallOnHackableMechanoid"/>
 		</modExtensions>
 	</RecipeDef>
-	
+
 	<ThingDef ParentName="BodyPartBase">
 		<defName>MF_TailoringModule</defName>
 		<label>tailoring module</label>
@@ -1205,7 +1204,7 @@
 			<li>Manufactured</li>
 		</thingCategories>
 	</ThingDef>
-	
+
 	<HediffDef ParentName="MF_MechanoidModification_Base">
 		<defName>MF_TailoringModule</defName>
 		<label>tailoring module</label>
@@ -1221,7 +1220,7 @@
 			</li>
 		</modExtensions>
 	</HediffDef>
-	
+
 
 	<RecipeDef ParentName="MF_Craft_Module_Base">
 		<defName>MF_Craft_CraftingModule</defName>
@@ -1259,7 +1258,7 @@
 		</skillRequirements>
 		<workSkill>Crafting</workSkill>
 	</RecipeDef>
-	
+
 	<RecipeDef>
 		<defName>MF_InstallCraftingModule</defName>
 		<label>install crafting module</label>
@@ -1271,7 +1270,7 @@
 			<Crafting>5</Crafting>
 			<Intellectual>5</Intellectual>
 		</skillRequirements>
-		<workSkill>Intellectual</workSkill>
+		<workSkill>Crafting</workSkill>
 		<ingredients>
 			<li>
 				<filter>
@@ -1285,10 +1284,10 @@
 		<targetsBodyPart>false</targetsBodyPart>
 		<addsHediff>MF_CraftingModule</addsHediff>
 		<modExtensions>
-			<li Class="MechanoidFoundry.RecipeInstallOnHackableMechanoid"></li>
+			<li Class="MechanoidFoundry.RecipeInstallOnHackableMechanoid"/>
 		</modExtensions>
 	</RecipeDef>
-	
+
 	<ThingDef ParentName="BodyPartBase">
 		<defName>MF_CraftingModule</defName>
 		<label>crafting module</label>
@@ -1315,7 +1314,7 @@
 			<li>Manufactured</li>
 		</thingCategories>
 	</ThingDef>
-	
+
 	<HediffDef ParentName="MF_MechanoidModification_Base">
 		<defName>MF_CraftingModule</defName>
 		<label>crafting module</label>
@@ -1331,7 +1330,6 @@
 			</li>
 		</modExtensions>
 	</HediffDef>
-	
 
 	<RecipeDef ParentName="MF_Craft_Module_Base">
 		<defName>MF_Craft_CleaningModule</defName>
@@ -1365,11 +1363,11 @@
 			<MF_CleaningModule>1</MF_CleaningModule>
 		</products>
 		<skillRequirements>
-			<Cleaning>8</Cleaning>
+			<Crafting>8</Crafting>
 		</skillRequirements>
-		<workSkill>Cleaning</workSkill>
+		<workSkill>Crafting</workSkill>
 	</RecipeDef>
-	
+
 	<RecipeDef>
 		<defName>MF_InstallCleaningModule</defName>
 		<label>install cleaning module</label>
@@ -1378,10 +1376,10 @@
 		<jobString>Installing cleaning module.</jobString>
 		<workAmount>5000</workAmount>
 		<skillRequirements>
-			<Cleaning>5</Cleaning>
+			<Crafting>5</Crafting>
 			<Intellectual>5</Intellectual>
 		</skillRequirements>
-		<workSkill>Intellectual</workSkill>
+		<workSkill>Crafting</workSkill>
 		<ingredients>
 			<li>
 				<filter>
@@ -1395,10 +1393,10 @@
 		<targetsBodyPart>false</targetsBodyPart>
 		<addsHediff>MF_CleaningModule</addsHediff>
 		<modExtensions>
-			<li Class="MechanoidFoundry.RecipeInstallOnHackableMechanoid"></li>
+			<li Class="MechanoidFoundry.RecipeInstallOnHackableMechanoid"/>
 		</modExtensions>
 	</RecipeDef>
-	
+
 	<ThingDef ParentName="BodyPartBase">
 		<defName>MF_CleaningModule</defName>
 		<label>cleaning module</label>
@@ -1425,7 +1423,7 @@
 			<li>Manufactured</li>
 		</thingCategories>
 	</ThingDef>
-	
+
 	<HediffDef ParentName="MF_MechanoidModification_Base">
 		<defName>MF_CleaningModule</defName>
 		<label>cleaning module</label>
