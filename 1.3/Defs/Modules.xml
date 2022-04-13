@@ -1439,4 +1439,333 @@
 			</li>
 		</modExtensions>
 	</HediffDef>
+	
+	<RecipeDef ParentName="MF_Craft_Module_Base">
+		<defName>MF_Craft_TargetingModule</defName>
+		<label>craft targeting module</label>
+		<description>Craft a targeting module</description>
+		<ingredients>
+			<li>
+				<filter>
+					<thingDefs>
+						<li>Plasteel</li>
+					</thingDefs>
+				</filter>
+				<count>30</count>
+			</li>
+			<li>
+				<filter>
+					<thingDefs>
+						<li>ComponentSpacer</li>
+					</thingDefs>
+				</filter>
+				<count>1</count>
+			</li>
+		</ingredients>
+		<fixedIngredientFilter>
+			<thingDefs>
+				<li>Plasteel</li>
+				<li>ComponentSpacer</li>
+			</thingDefs>
+		</fixedIngredientFilter>
+		<products>
+			<MF_TargetingModule>1</MF_TargetingModule>
+		</products>
+		<skillRequirements>
+			<Crafting>8</Crafting>
+		</skillRequirements>
+		<workSkill>Crafting</workSkill>
+	</RecipeDef>
+
+	<RecipeDef>
+		<defName>MF_InstallTargetingModule</defName>
+		<label>install targeting module</label>
+		<description>Install a targeting module.</description>
+		<workerClass>MechanoidFoundry.RecipeModifyMechanoid</workerClass>
+		<jobString>Installing targeting module.</jobString>
+		<workAmount>5000</workAmount>
+		<skillRequirements>
+			<Crafting>5</Crafting>
+			<Intellectual>5</Intellectual>
+		</skillRequirements>
+		<workSkill>Crafting</workSkill>
+		<ingredients>
+			<li>
+				<filter>
+					<thingDefs>
+						<li>MF_TargetingModule</li>
+					</thingDefs>
+				</filter>
+				<count>1</count>
+			</li>
+		</ingredients>
+		<targetsBodyPart>false</targetsBodyPart>
+		<addsHediff>MF_TargetingModule</addsHediff>
+		<modExtensions>
+			<li Class="MechanoidFoundry.RecipeInstallOnHackableMechanoid"/>
+		</modExtensions>
+	</RecipeDef>
+
+	<ThingDef ParentName="BodyPartBase">
+		<defName>MF_TargetingModule</defName>
+		<label>targeting module</label>
+		<description>Can be installed in a mechanoid to make it able to aim faster.</description>
+		<soundInteract>Metal_Drop</soundInteract>
+		<soundDrop>Standard_Drop</soundDrop>
+		<stackLimit>1</stackLimit>
+		<graphicData>
+			<texPath>Things/Item/Health/HealthItem</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+			<drawSize>0.80</drawSize>
+			<color>(189,169,118)</color>
+		</graphicData>
+		<statBases>
+			<WorkToMake>7000</WorkToMake>
+			<MaxHitPoints>70</MaxHitPoints>
+			<Mass>0.6</Mass>
+			<Flammability>1.0</Flammability>
+			<DeteriorationRate>2.0</DeteriorationRate>
+			<SellPriceFactor>0.70</SellPriceFactor>
+		</statBases>
+		<intricate>true</intricate>
+		<thingCategories>
+			<li>Manufactured</li>
+		</thingCategories>
+	</ThingDef>
+
+	<HediffDef ParentName="MF_MechanoidModification_Base">
+		<defName>MF_TargetingModule</defName>
+		<label>targeting module</label>
+		<description>targeting module</description>
+		<defaultLabelColor>(0.5, 0.5, 0.9)</defaultLabelColor>
+		<isBad>false</isBad>
+		<stages>
+			<li>
+				<statOffsets>
+				<ShootingAccuracyPawn>4</ShootingAccuracyPawn>
+				<AimingDelayFactor>-0.4</AimingDelayFactor>
+				</statOffsets>
+			</li>
+		</stages>
+	</HediffDef>
+	
+
+	<RecipeDef ParentName="MF_Craft_Module_Base">
+		<defName>MF_Craft_SpeedModule</defName>
+		<label>craft speed module</label>
+		<description>Craft a speed module</description>
+		<ingredients>
+			<li>
+				<filter>
+					<thingDefs>
+						<li>Plasteel</li>
+					</thingDefs>
+				</filter>
+				<count>30</count>
+			</li>
+			<li>
+				<filter>
+					<thingDefs>
+						<li>ComponentSpacer</li>
+					</thingDefs>
+				</filter>
+				<count>1</count>
+			</li>
+		</ingredients>
+		<fixedIngredientFilter>
+			<thingDefs>
+				<li>Plasteel</li>
+				<li>ComponentSpacer</li>
+			</thingDefs>
+		</fixedIngredientFilter>
+		<products>
+			<MF_SpeedModule>1</MF_SpeedModule>
+		</products>
+		<skillRequirements>
+			<Crafting>8</Crafting>
+		</skillRequirements>
+		<workSkill>Crafting</workSkill>
+	</RecipeDef>
+
+	<RecipeDef>
+		<defName>MF_InstallSpeedModule</defName>
+		<label>install speed module</label>
+		<description>Install a speed module.</description>
+		<workerClass>MechanoidFoundry.RecipeModifyMechanoid</workerClass>
+		<jobString>Installing speed module.</jobString>
+		<workAmount>5000</workAmount>
+		<skillRequirements>
+			<Crafting>5</Crafting>
+			<Intellectual>5</Intellectual>
+		</skillRequirements>
+		<workSkill>Crafting</workSkill>
+		<ingredients>
+			<li>
+				<filter>
+					<thingDefs>
+						<li>MF_SpeedModule</li>
+					</thingDefs>
+				</filter>
+				<count>1</count>
+			</li>
+		</ingredients>
+		<targetsBodyPart>false</targetsBodyPart>
+		<addsHediff>MF_SpeedModule</addsHediff>
+		<modExtensions>
+			<li Class="MechanoidFoundry.RecipeInstallOnHackableMechanoid"/>
+		</modExtensions>
+	</RecipeDef>
+
+	<ThingDef ParentName="BodyPartBase">
+		<defName>MF_SpeedModule</defName>
+		<label>speed module</label>
+		<description>Can be installed in a mechanoid to make it faster.</description>
+		<soundInteract>Metal_Drop</soundInteract>
+		<soundDrop>Standard_Drop</soundDrop>
+		<stackLimit>1</stackLimit>
+		<graphicData>
+			<texPath>Things/Item/Health/HealthItem</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+			<drawSize>0.80</drawSize>
+			<color>(189,169,118)</color>
+		</graphicData>
+		<statBases>
+			<WorkToMake>7000</WorkToMake>
+			<MaxHitPoints>70</MaxHitPoints>
+			<Mass>0.6</Mass>
+			<Flammability>1.0</Flammability>
+			<DeteriorationRate>2.0</DeteriorationRate>
+			<SellPriceFactor>0.70</SellPriceFactor>
+		</statBases>
+		<intricate>true</intricate>
+		<thingCategories>
+			<li>Manufactured</li>
+		</thingCategories>
+	</ThingDef>
+
+	<HediffDef ParentName="MF_MechanoidModification_Base">
+		<defName>MF_SpeedModule</defName>
+		<label>speed module</label>
+		<description>speed module</description>
+		<defaultLabelColor>(0.5, 0.5, 0.9)</defaultLabelColor>
+		<isBad>false</isBad>
+		<stages>
+			<li>
+				<statOffsets>
+					<MoveSpeed>0.4</MoveSpeed>
+				</statOffsets>
+			</li>
+		</stages>
+	</HediffDef>
+	
+
+	<RecipeDef ParentName="MF_Craft_Module_Base">
+		<defName>MF_Craft_ArmorModule</defName>
+		<label>craft armor module</label>
+		<description>Craft a armor module</description>
+		<ingredients>
+			<li>
+				<filter>
+					<thingDefs>
+						<li>Plasteel</li>
+					</thingDefs>
+				</filter>
+				<count>30</count>
+			</li>
+			<li>
+				<filter>
+					<thingDefs>
+						<li>ComponentSpacer</li>
+					</thingDefs>
+				</filter>
+				<count>1</count>
+			</li>
+		</ingredients>
+		<fixedIngredientFilter>
+			<thingDefs>
+				<li>Plasteel</li>
+				<li>ComponentSpacer</li>
+			</thingDefs>
+		</fixedIngredientFilter>
+		<products>
+			<MF_ArmorModule>1</MF_ArmorModule>
+		</products>
+		<skillRequirements>
+			<Crafting>8</Crafting>
+		</skillRequirements>
+		<workSkill>Crafting</workSkill>
+	</RecipeDef>
+
+	<RecipeDef>
+		<defName>MF_InstallArmorModule</defName>
+		<label>install armor module</label>
+		<description>Install a armor module.</description>
+		<workerClass>MechanoidFoundry.RecipeModifyMechanoid</workerClass>
+		<jobString>Installing armor module.</jobString>
+		<workAmount>5000</workAmount>
+		<skillRequirements>
+			<Crafting>5</Crafting>
+			<Intellectual>5</Intellectual>
+		</skillRequirements>
+		<workSkill>Crafting</workSkill>
+		<ingredients>
+			<li>
+				<filter>
+					<thingDefs>
+						<li>MF_ArmorModule</li>
+					</thingDefs>
+				</filter>
+				<count>1</count>
+			</li>
+		</ingredients>
+		<targetsBodyPart>false</targetsBodyPart>
+		<addsHediff>MF_ArmorModule</addsHediff>
+		<modExtensions>
+			<li Class="MechanoidFoundry.RecipeInstallOnHackableMechanoid"/>
+		</modExtensions>
+	</RecipeDef>
+
+	<ThingDef ParentName="BodyPartBase">
+		<defName>MF_ArmorModule</defName>
+		<label>armor module</label>
+		<description>Can be installed in a mechanoid to make it faster.</description>
+		<soundInteract>Metal_Drop</soundInteract>
+		<soundDrop>Standard_Drop</soundDrop>
+		<stackLimit>1</stackLimit>
+		<graphicData>
+			<texPath>Things/Item/Health/HealthItem</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+			<drawSize>0.80</drawSize>
+			<color>(189,169,118)</color>
+		</graphicData>
+		<statBases>
+			<WorkToMake>7000</WorkToMake>
+			<MaxHitPoints>70</MaxHitPoints>
+			<Mass>0.6</Mass>
+			<Flammability>1.0</Flammability>
+			<DeteriorationRate>2.0</DeteriorationRate>
+			<SellPriceFactor>0.70</SellPriceFactor>
+		</statBases>
+		<intricate>true</intricate>
+		<thingCategories>
+			<li>Manufactured</li>
+		</thingCategories>
+	</ThingDef>
+
+	<HediffDef ParentName="MF_MechanoidModification_Base">
+		<defName>MF_ArmorModule</defName>
+		<label>armor module</label>
+		<description>armor module</description>
+		<defaultLabelColor>(0.5, 0.5, 0.9)</defaultLabelColor>
+		<isBad>false</isBad>
+		<stages>
+			<li>
+				<statOffsets>
+					<ArmorRating_Sharp>0.4</ArmorRating_Sharp>
+					<ArmorRating_Blunt>0.4</ArmorRating_Blunt>
+					<ArmorRating_Heat>0.4</ArmorRating_Heat>
+				</statOffsets>
+			</li>
+		</stages>
+	</HediffDef>
 </Defs>

@@ -18,5 +18,7 @@ namespace MechanoidFoundry
         public static ThinkTreeDef VFE_Mechanoids_Machine_RiddableConstant;
         public static ThinkTreeDef Downed;
         public static ThinkTreeDef VFE_MainMachineBehaviourViolentActive;
+        public static ThinkTreeDef JoinAutoJoinableCaravan;
+        public static ThinkTreeDef LordDutyConstant;
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Verse;
 using Verse.AI;
+using Verse.Noise;
 using VFEMech;
 
 namespace MechanoidFoundry
@@ -26,8 +27,26 @@ namespace MechanoidFoundry
                     {
                         if (pawn.race.race.thinkTreeConstant != null)
                         {
-                            Log.Error("Couldn't make " + pawn + " caravan riddable because of existing thinktree " + pawn.race.race.thinkTreeConstant
-                                + ". Report about it on Mechanoid Foundry steam page.");
+                            var node = pawn.race.race.thinkTreeConstant.thinkRoot.subNodes
+                                .Find(x => x is ThinkNode_ConditionalCanDoConstantThinkTreeJobNow);
+                            if (node != null)
+                            {
+                                if (!node.subNodes.Exists(x => x is ThinkNode_Subtree subtree && subtree.treeDef == MechanoidFoundryDefOf.JoinAutoJoinableCaravan))
+                                {
+                                    node.subNodes.Add(new ThinkNode_Subtree
+                                    {
+                                        treeDef = MechanoidFoundryDefOf.JoinAutoJoinableCaravan,
+                                    });
+                                }
+
+                                if (!node.subNodes.Exists(x => x is ThinkNode_Subtree subtree && subtree.treeDef == MechanoidFoundryDefOf.LordDutyConstant))
+                                {
+                                    node.subNodes.Add(new ThinkNode_Subtree
+                                    {
+                                        treeDef = MechanoidFoundryDefOf.LordDutyConstant,
+                                    });
+                                }
+                            }
                         }
                         else
                         {
@@ -50,11 +69,6 @@ namespace MechanoidFoundry
                             {
                                 pawn.race.race.thinkTreeMain.thinkRoot.subNodes.Add(toAdd);
                             }
-                        }
-                        else
-                        {
-                            Log.Error("Couldn't make " + pawn + " caravan riddable because of missing Downed treeNode" + pawn.race.race.thinkTreeMain
-                                + ". Report about it on Mechanoid Foundry steam page.");
                         }
                         //for (var i = 0; i < pawn.race.race.thinkTreeMain.thinkRoot.subNodes.Count; i++)
                         //{
