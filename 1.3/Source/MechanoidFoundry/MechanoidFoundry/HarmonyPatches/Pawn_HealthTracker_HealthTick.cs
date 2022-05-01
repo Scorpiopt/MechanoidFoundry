@@ -6,6 +6,7 @@ using Verse;
 
 namespace MechanoidFoundry
 {
+
     [HarmonyPatch(typeof(Pawn_HealthTracker), "HealthTick")]
     static class Pawn_HealthTracker_HealthTick
     {

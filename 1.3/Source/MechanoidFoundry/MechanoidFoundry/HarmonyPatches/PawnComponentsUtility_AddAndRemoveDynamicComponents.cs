@@ -29,6 +29,13 @@ namespace MechanoidFoundry
                 {
                     pawn.ownership = new Pawn_Ownership(pawn);
                 }
+                if (pawn.workSettings == null)
+                {
+                    pawn.workSettings = new Pawn_WorkSettings(pawn);
+                    DefMap<WorkTypeDef, int> priorities = new DefMap<WorkTypeDef, int>();
+                    priorities.SetAll(0);
+                    pawn.workSettings.priorities = priorities;
+                }
             }
         }
     }

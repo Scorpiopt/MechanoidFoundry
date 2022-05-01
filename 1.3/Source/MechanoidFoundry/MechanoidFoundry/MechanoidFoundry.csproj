@@ -58,6 +58,7 @@
     <Compile Include="HarmonyPatches\ITab_Pawn_Character_IsVisible_Patch.cs" />
     <Compile Include="HarmonyPatches\ITab_Pawn_Health_ShouldAllowOperations.cs" />
     <Compile Include="HarmonyPatches\JobGiver_Recharge_TryGiveJob.cs" />
+    <Compile Include="HarmonyPatches\Need_Power_PowerNeedCapacity_Patch.cs" />
     <Compile Include="HarmonyPatches\PawnComponentsUtility_AddAndRemoveDynamicComponents.cs" />
     <Compile Include="HarmonyPatches\PawnUIOverlay_DrawPawnGUIOverlay.cs" />
     <Compile Include="HarmonyPatches\Pawn_EquipmentTracker_DestroyEquipment.cs" />

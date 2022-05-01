@@ -42,31 +42,34 @@ namespace MechanoidFoundry
         {
             base.PostAdd(dinfo);
             var extension = this.def.GetModExtension<HediffExtension>();
-            if (extension.workTypes != null)
+            if (extension != null)
             {
-                if (pawn.story == null)
-                    pawn.story = new Pawn_StoryTracker(pawn);
-                if (pawn.skills == null)
-                    pawn.skills = new Pawn_SkillTracker(pawn);
-                if (pawn.workSettings == null)
+                if (extension.workTypes != null)
                 {
-                    pawn.workSettings = new Pawn_WorkSettings(pawn);
-                    DefMap<WorkTypeDef, int> priorities = new DefMap<WorkTypeDef, int>();
-                    priorities.SetAll(0);
-                    pawn.workSettings.priorities = priorities;
-                }
-
-                foreach (WorkTypeDef workType in extension.workTypes)
-                {
-                    if (extension.skillLevel.HasValue)
+                    if (pawn.story == null)
+                        pawn.story = new Pawn_StoryTracker(pawn);
+                    if (pawn.skills == null)
+                        pawn.skills = new Pawn_SkillTracker(pawn);
+                    if (pawn.workSettings == null)
                     {
-                        foreach (SkillDef skill in workType.relevantSkills)
-                        {
-                            SkillRecord record = pawn.skills.skills.Find(rec => rec.def == skill);
-                            record.levelInt = extension.skillLevel.Value;
-                        }
+                        pawn.workSettings = new Pawn_WorkSettings(pawn);
+                        DefMap<WorkTypeDef, int> priorities = new DefMap<WorkTypeDef, int>();
+                        priorities.SetAll(0);
+                        pawn.workSettings.priorities = priorities;
                     }
-                    pawn.workSettings.SetPriority(workType, 1);
+
+                    foreach (WorkTypeDef workType in extension.workTypes)
+                    {
+                        if (extension.skillLevel.HasValue)
+                        {
+                            foreach (SkillDef skill in workType.relevantSkills)
+                            {
+                                SkillRecord record = pawn.skills.skills.Find(rec => rec.def == skill);
+                                record.levelInt = extension.skillLevel.Value;
+                            }
+                        }
+                        pawn.workSettings.SetPriority(workType, 1);
+                    }
                 }
             }
         }

@@ -20,5 +20,6 @@ namespace MechanoidFoundry
         public static ThinkTreeDef VFE_MainMachineBehaviourViolentActive;
         public static ThinkTreeDef JoinAutoJoinableCaravan;
         public static ThinkTreeDef LordDutyConstant;
+        public static HediffDef MF_BatteryModule;
     }
 }
