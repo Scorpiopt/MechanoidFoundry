@@ -161,8 +161,8 @@ namespace MechanoidFoundry
                 {
                     NewIngredient(ThingDef.Named("Steel"), (int)(500 * costMultiplier)),
                     NewIngredient(ThingDef.Named("Plasteel"), (int)(400 * costMultiplier)),
-                    NewIngredient(ThingDef.Named("ComponentIndustrial"), (int)(100 * costMultiplier)),
-                    NewIngredient(ThingDef.Named("ComponentSpacer"), (int)(50 * costMultiplier)),
+                    NewIngredient(ThingDef.Named("ComponentIndustrial"), (int)(20 * costMultiplier)),
+                    NewIngredient(ThingDef.Named("ComponentSpacer"), (int)(5 * costMultiplier)),
                 },
                 products = new List<ThingDefCountClass>
                 {
