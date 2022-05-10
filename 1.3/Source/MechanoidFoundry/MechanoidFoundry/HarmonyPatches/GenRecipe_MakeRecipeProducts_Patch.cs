@@ -27,19 +27,20 @@ namespace MechanoidFoundry
         private static void SpawnMechanoid(RecipeDef recipeDef, Pawn worker)
         {
             var pawnKindDef = PawnKindDef.Named(recipeDef.defName.Replace("MakeMechanoid_", ""));
-            var pawn = PawnGenerator.GeneratePawn(new PawnGenerationRequest(pawnKindDef, Faction.OfMechanoids, newborn: false));
-            GenSpawn.Spawn(pawn, worker.Position, worker.Map);
-            var eq = pawn.equipment.Primary;
+            var mech = PawnGenerator.GeneratePawn(new PawnGenerationRequest(pawnKindDef, Faction.OfMechanoids, newborn: false));
+            GenSpawn.Spawn(mech, worker.Position, worker.Map);
+            var eq = mech.equipment.Primary;
             if (eq != null)
             {
-                pawn.equipment.Remove(eq);
+                mech.equipment.Remove(eq);
             }
-            pawn.SetFaction(Faction.OfPlayer);
+            PawnComponentsUtility_AddAndRemoveDynamicComponents.AssignPawnComponents(mech);
+            mech.SetFaction(Faction.OfPlayer);
             if (eq != null)
             {
-                pawn.equipment.AddEquipment(eq);
+                mech.equipment.AddEquipment(eq);
             }
-            pawn.needs.AddOrRemoveNeedsAsAppropriate();
+            mech.needs.AddOrRemoveNeedsAsAppropriate();
         }
     }
 }
