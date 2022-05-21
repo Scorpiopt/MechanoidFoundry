@@ -114,6 +114,7 @@ namespace MechanoidFoundry
                         pawn.race.comps.Add(new CompProperties_Machine
                         {
                             violent = true,
+                            canPickupWeapons = true,
                             hoursActive = 100 * pawn.race.race.baseBodySize,
                             compClass = typeof(CompMachine)
                         });
