@@ -46,6 +46,10 @@ namespace MechanoidFoundry
                 priorities.SetAll(0);
                 pawn.workSettings.priorities = priorities;
             }
+            if (pawn.playerSettings != null)
+            {
+                pawn.playerSettings.medCare = MedicalCareCategory.NoCare;
+            }
         }
     }
 }

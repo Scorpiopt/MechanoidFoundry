@@ -18,28 +18,29 @@ namespace MechanoidFoundry
 				bool flag2 = false;
 				if (__instance.hediffSet.HasNaturallyHealingInjury())
 				{
-					float num3 = 8f;
+					float toHeal = 16f;
 					if (__instance.pawn.GetPosture() != 0)
 					{
-						num3 += 4f;
+						toHeal += 4f;
 						Building_Bed building_Bed = __instance.pawn.CurrentBed();
 						if (building_Bed != null)
 						{
-							num3 += building_Bed.def.building.bed_healPerDay;
+							toHeal += building_Bed.def.building.bed_healPerDay;
 						}
 					}
+
 					foreach (Hediff hediff3 in __instance.hediffSet.hediffs)
 					{
 						HediffStage curStage = hediff3.CurStage;
 						if (curStage != null && curStage.naturalHealingFactor != -1f)
 						{
-							num3 *= curStage.naturalHealingFactor;
+							toHeal *= curStage.naturalHealingFactor;
 						}
 					}
 					var hediffToHeal = (from x in __instance.hediffSet.GetHediffs<Hediff_Injury>()
 										where x.CanHealNaturally()
 										select x).RandomElement();
-					hediffToHeal.Heal(num3 * __instance.pawn.HealthScale * 0.01f * __instance.pawn.GetStatValue(StatDefOf.InjuryHealingFactor));
+					hediffToHeal.Heal(toHeal * __instance.pawn.HealthScale * 0.01f * __instance.pawn.GetStatValue(StatDefOf.InjuryHealingFactor));
 					flag2 = true;
 				}
 				if (__instance.hediffSet.HasTendedAndHealingInjury())
@@ -49,7 +50,7 @@ namespace MechanoidFoundry
 												   select x).RandomElement();
 					float tendQuality = hediff_Injury.TryGetComp<HediffComp_TendDuration>().tendQuality;
 					float num4 = GenMath.LerpDouble(0f, 1f, 0.5f, 1.5f, Mathf.Clamp01(tendQuality));
-					hediff_Injury.Heal(8f * num4 * __instance.pawn.HealthScale * 0.01f * __instance.pawn.GetStatValue(StatDefOf.InjuryHealingFactor));
+					hediff_Injury.Heal(16f * num4 * __instance.pawn.HealthScale * 0.01f * __instance.pawn.GetStatValue(StatDefOf.InjuryHealingFactor));
 					flag2 = true;
 				}
 				if (flag2 && !__instance.HasHediffsNeedingTendByPlayer() && !HealthAIUtility.ShouldSeekMedicalRest(__instance.pawn) && !__instance.hediffSet.HasTendedAndHealingInjury() && PawnUtility.ShouldSendNotificationAbout(__instance.pawn))
