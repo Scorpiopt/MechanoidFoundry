@@ -30,7 +30,7 @@ namespace MechanoidFoundry
         {
             if (__instance is Building_MechanoidPad)
             {
-                __result = __instance.InteractionCell;
+                __result = __instance.Position;
             }
         }
     }
