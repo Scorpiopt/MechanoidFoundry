@@ -43,6 +43,16 @@ namespace MechanoidFoundry
 					hediffToHeal.Heal(toHeal * __instance.pawn.HealthScale * 0.01f * __instance.pawn.GetStatValue(StatDefOf.InjuryHealingFactor));
 					flag2 = true;
 				}
+				else
+				{
+					var hediffs = __instance.hediffSet.GetHediffs<Hediff_MissingPart>().ToList();
+					if (hediffs.TryRandomElement(out var missingPart))
+					{
+                        var part = missingPart.Part;
+                        __instance.RemoveHediff(missingPart);
+                        __instance.RestorePart(part);
+                    }
+                }
 				if (__instance.hediffSet.HasTendedAndHealingInjury())
 				{
 					Hediff_Injury hediff_Injury = (from x in __instance.hediffSet.GetHediffs<Hediff_Injury>()
