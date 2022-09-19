@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BaseMechanoidWalker">
+    <defName>MF_Mech_Scorpion</defName>
+    <label>Scorpion</label>
+    <description>Fast human-sized combat mechanoids built for medium and long-range combat. Their bodies are light, making them vulnerable targets at close range - especially in melee combat.</description>
+	<statBases>
+		<MoveSpeed>2.1</MoveSpeed>
+		<ArmorRating_Blunt>0.22</ArmorRating_Blunt>
+		<ArmorRating_Sharp>0.72</ArmorRating_Sharp>
+		<CarryingCapacity>120</CarryingCapacity>
+	</statBases>
+    <tools>
+      <li>
+        <label>left claw</label>
+        <capacities>
+          <li>Cut</li>
+        </capacities>
+        <power>20.0</power>
+        <armorPenetration>0.3</armorPenetration>
+        <cooldownTime>3</cooldownTime>
+        <linkedBodyPartsGroup>LeftHand</linkedBodyPartsGroup>
+        <alwaysTreatAsWeapon>true</alwaysTreatAsWeapon>
+      </li>
+      <li>
+        <label>right claw</label>
+        <capacities>
+          <li>Stab</li>
+        </capacities>
+        <power>20.0</power>
+        <armorPenetration>0.3</armorPenetration>
+        <cooldownTime>3</cooldownTime>
+        <linkedBodyPartsGroup>RightHand</linkedBodyPartsGroup>
+        <alwaysTreatAsWeapon>true</alwaysTreatAsWeapon>
+      </li>
+      <li>
+        <label>stinger</label>
+        <capacities>
+          <li>Cut</li>
+        </capacities>
+        <power>30</power>
+        <cooldownTime>5</cooldownTime>
+        <armorPenetration>0.3</armorPenetration>
+        <linkedBodyPartsGroup>HeadAttackTool</linkedBodyPartsGroup>
+        <ensureLinkedBodyPartsGroupAlwaysUsable>true</ensureLinkedBodyPartsGroupAlwaysUsable>
+        <chanceFactor>0.2</chanceFactor>
+      </li>
+    </tools>
+    <race>
+      <body>MF_Scorpion</body>
+      <baseHealthScale>2.16</baseHealthScale>
+      <baseBodySize>1.6</baseBodySize>
+      <soundMeleeHitPawn>Pawn_Melee_Punch_HitPawn</soundMeleeHitPawn>
+      <soundMeleeHitBuilding>Pawn_Melee_Punch_HitBuilding</soundMeleeHitBuilding>
+      <soundMeleeMiss>Pawn_Melee_Punch_Miss</soundMeleeMiss>
+    </race>
+	<!--
+	<modExtensions>
+		<li Class="VFE.Mechanoids.MechanoidExtension">
+			<preventSpawnInAncientDangersAndClusters>true</preventSpawnInAncientDangersAndClusters>
+		</li>
+	</modExtensions>-->
+  </ThingDef>
+
+  <PawnKindDef ParentName="BaseMechanoidKind">
+    <defName>MF_Mech_Scorpion</defName>
+    <label>Scorpion</label>
+    <race>MF_Mech_Scorpion</race>
+    <combatPower>150</combatPower>
+    <lifeStages>
+      <li>
+        <bodyGraphicData>
+          <texPath>Things/Pawn/Mechanoid/Scorpion</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>5</drawSize>
+          <shadowData>
+            <volume>(0.4, 0.8, 0.4)</volume>
+          </shadowData>
+        </bodyGraphicData>
+      </li>
+    </lifeStages>
+    <weaponMoney>9999~9999</weaponMoney>
+    <weaponTags>
+      <li>MechanoidGunHeavy</li>
+    </weaponTags>
+  </PawnKindDef>
+
+</Defs>
