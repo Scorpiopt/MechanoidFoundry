@@ -4,11 +4,10 @@ using Verse;
 
 namespace MechanoidFoundry
 {
-
     [HarmonyPatch(typeof(PawnComponentsUtility), "AddAndRemoveDynamicComponents")]
     public static class PawnComponentsUtility_AddAndRemoveDynamicComponents
     {
-        static void Postfix(Pawn pawn)
+        public static void Postfix(Pawn pawn)
         {
             MakeComponentsToHackedMechanoid(pawn);
         }
@@ -45,6 +44,10 @@ namespace MechanoidFoundry
                 DefMap<WorkTypeDef, int> priorities = new DefMap<WorkTypeDef, int>();
                 priorities.SetAll(0);
                 pawn.workSettings.priorities = priorities;
+            }
+            if (pawn.interactions == null)
+            {
+                pawn.interactions = new Pawn_InteractionsTracker(pawn);
             }
             if (pawn.playerSettings != null)
             {
