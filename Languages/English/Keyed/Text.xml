@@ -3,4 +3,9 @@
 	<MF.MakingMechanoid>Making {0}</MF.MakingMechanoid>
 	<MF.MakeRecipeLabel>make {0}</MF.MakeRecipeLabel>
 	<MF.MakeRecipeDescription>Make {0}.</MF.MakeRecipeDescription>
+	<MF.Search>Search</MF.Search>
+	<MF.Select>Select</MF.Select>
+	<MF.SetCostList>Set craft ingredients</MF.SetCostList>
+	<MF.Count>Count</MF.Count>
+	<MF.Craftable>Craftable</MF.Craftable>
 </LanguageData>

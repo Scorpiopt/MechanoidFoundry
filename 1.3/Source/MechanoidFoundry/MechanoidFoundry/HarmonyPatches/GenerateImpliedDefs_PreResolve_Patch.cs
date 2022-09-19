@@ -98,20 +98,8 @@ namespace MechanoidFoundry
         }
         private static RecipeDef GetMechRecipeDef(PawnKindDef mech)
         {
-            float costMultiplier = 1;
-            if (mech.combatPower <= 100)
-            {
-                costMultiplier = 0.25f;
-            }
-            else if (mech.combatPower <= 200)
-            {
-                costMultiplier = 0.5f;
-            }
-            else if (mech.combatPower <= 300)
-            {
-                costMultiplier = 0.75f;
-            }
-            return new RecipeDef
+            float costMultiplier = GetMechCostMultiplier(mech);
+            var recipe = new RecipeDef
             {
                 recipeUsers = new List<ThingDef>
                 {
@@ -133,37 +121,10 @@ namespace MechanoidFoundry
                 unfinishedThingDef = ThingDef.Named("UnfinishedComponent"),
                 jobString = "MF.MakingMechanoid".Translate(mech.label),
                 workSkill = SkillDefOf.Crafting,
-                fixedIngredientFilter = new ThingFilter
-                {
-                    thingDefs = new List<ThingDef>
-                    {
-                        ThingDef.Named("Steel"),
-                        ThingDef.Named("Plasteel"),
-                        ThingDef.Named("ComponentIndustrial"),
-                        ThingDef.Named("ComponentSpacer"),
-                    }
-                },
-                defaultIngredientFilter = new ThingFilter
-                {
-                    thingDefs = new List<ThingDef>
-                    {
-                        ThingDef.Named("Steel"),
-                        ThingDef.Named("Plasteel"),
-                        ThingDef.Named("ComponentIndustrial"),
-                        ThingDef.Named("ComponentSpacer"),
-                    }
-                },
                 defName = "MakeMechanoid_" + mech.defName,
                 label = "MF.MakeRecipeLabel".Translate(mech.label),
                 description = "MF.MakeRecipeDescription".Translate(mech.label),
                 workAmount = 10000 * mech.race.race.baseBodySize,
-                ingredients = new List<IngredientCount>
-                {
-                    NewIngredient(ThingDef.Named("Steel"), (int)(500 * costMultiplier)),
-                    NewIngredient(ThingDef.Named("Plasteel"), (int)(400 * costMultiplier)),
-                    NewIngredient(ThingDef.Named("ComponentIndustrial"), (int)(20 * costMultiplier)),
-                    NewIngredient(ThingDef.Named("ComponentSpacer"), (int)(5 * costMultiplier)),
-                },
                 products = new List<ThingDefCountClass>
                 {
                     new ThingDefCountClass
@@ -173,21 +134,92 @@ namespace MechanoidFoundry
                     }
                 }
             };
-
-            IngredientCount NewIngredient(ThingDef ingredient, int baseCount)
+            if (MechanoidFoundryMod.settings.buildPropsByDefs.TryGetValue(mech.defName, out var props))
             {
-                return new IngredientCount
+                recipe.fixedIngredientFilter = new ThingFilter
                 {
-                    filter = new ThingFilter
+                    thingDefs = new List<ThingDef>()
+                };
+                recipe.defaultIngredientFilter = new ThingFilter
+                {
+                    thingDefs = new List<ThingDef>()
+                };
+                recipe.ingredients = new List<IngredientCount>();
+                foreach (var cost in props.costList)
+                {
+                    var thingDef = DefDatabase<ThingDef>.GetNamed(cost.Key);
+                    if (thingDef != null)
                     {
-                        thingDefs = new List<ThingDef>
+                        recipe.fixedIngredientFilter.thingDefs.Add(thingDef);
+                        recipe.defaultIngredientFilter.thingDefs.Add(thingDef);
+                        recipe.ingredients.Add(NewIngredient(thingDef, cost.Value));
+                    }
+                }
+            }
+            else
+            {
+                recipe.fixedIngredientFilter = new ThingFilter
+                {
+                    thingDefs = new List<ThingDef>
+                    {
+                        ThingDef.Named("Steel"),
+                        ThingDef.Named("Plasteel"),
+                        ThingDef.Named("ComponentIndustrial"),
+                        ThingDef.Named("ComponentSpacer"),
+                    }
+                };
+                recipe.defaultIngredientFilter = new ThingFilter
+                {
+                    thingDefs = new List<ThingDef>
+                    {
+                        ThingDef.Named("Steel"),
+                        ThingDef.Named("Plasteel"),
+                        ThingDef.Named("ComponentIndustrial"),
+                        ThingDef.Named("ComponentSpacer"),
+                    }
+                };
+                recipe.ingredients = new List<IngredientCount>
+                {
+                    NewIngredient(ThingDef.Named("Steel"), (int)(500 * costMultiplier)),
+                    NewIngredient(ThingDef.Named("Plasteel"), (int)(400 * costMultiplier)),
+                    NewIngredient(ThingDef.Named("ComponentIndustrial"), (int)(20 * costMultiplier)),
+                    NewIngredient(ThingDef.Named("ComponentSpacer"), (int)(5 * costMultiplier)),
+                };
+            }
+            return recipe;
+        }
+        public static float GetMechCostMultiplier(PawnKindDef mech)
+        {
+            float costMultiplier = 1;
+            if (mech.combatPower <= 100)
+            {
+                costMultiplier = 0.25f;
+            }
+            else if (mech.combatPower <= 200)
+            {
+                costMultiplier = 0.5f;
+            }
+            else if (mech.combatPower <= 300)
+            {
+                costMultiplier = 0.75f;
+            }
+
+            return costMultiplier;
+        }
+
+        public static IngredientCount NewIngredient(ThingDef ingredient, int baseCount)
+        {
+            return new IngredientCount
+            {
+                filter = new ThingFilter
+                {
+                    thingDefs = new List<ThingDef>
                         {
                             ingredient
                         }
-                    },
-                    count = Mathf.Max(baseCount, (int)mech.race.race.baseBodySize)
-                };
-            }
+                },
+                count = baseCount
+            };
         }
     }
 }
