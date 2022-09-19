@@ -132,7 +132,11 @@ namespace MechanoidFoundry
                             hasPowerNeedWhenHacked = true,
                         });
                     }
-
+                    else
+                    {
+                        modExtension.isCaravanRiddable = true;
+                        modExtension.hasPowerNeedWhenHacked = true;
+                    }
                     foreach (var recipe in recipesToInstallOnMechanoids)
                     {
                         pawn.race.AllRecipes.Add(recipe);
