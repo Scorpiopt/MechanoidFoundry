@@ -6,9 +6,9 @@ using VFE.Mechanoids.AI.JobGivers;
 namespace MechanoidFoundry
 {
     [HarmonyPatch(typeof(JobGiver_Recharge), "TryGiveJob")]
-    static class JobGiver_Recharge_TryGiveJob
+    public static class JobGiver_Recharge_TryGiveJob
     {
-        static void Prefix(Pawn pawn)
+        public static void Prefix(Pawn pawn)
         {
             if (pawn.IsMechanoidHacked())
             {
@@ -19,6 +19,7 @@ namespace MechanoidFoundry
                     if (building != null)
                     {
                         building.CompAssignableToPawn.TryAssignPawn(pawn);
+                        comp.myBuilding = building;
                     }
                 }
             }

@@ -53,9 +53,8 @@ namespace MechanoidFoundry
                     if (pawn.workSettings == null)
                     {
                         pawn.workSettings = new Pawn_WorkSettings(pawn);
-                        DefMap<WorkTypeDef, int> priorities = new DefMap<WorkTypeDef, int>();
-                        priorities.SetAll(0);
-                        pawn.workSettings.priorities = priorities;
+                        pawn.workSettings.EnableAndInitializeIfNotAlreadyInitialized();
+                        pawn.workSettings.priorities.SetAll(0);
                     }
 
                     foreach (WorkTypeDef workType in extension.workTypes)

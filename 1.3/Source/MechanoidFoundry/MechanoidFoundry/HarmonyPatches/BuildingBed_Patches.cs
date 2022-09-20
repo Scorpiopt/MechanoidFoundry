@@ -60,13 +60,13 @@ namespace MechanoidFoundry
     }
 
     [HarmonyPatch(typeof(CompAssignableToPawn_Bed), "get_AssigningCandidates")]
-    static class CompAssignableToPawn_Bed_AssigningCandidates
+    public static class CompAssignableToPawn_Bed_AssigningCandidates
     {
-        static bool Prefix(CompAssignableToPawn __instance, ref IEnumerable<Pawn> __result)
+        public static bool Prefix(CompAssignableToPawn __instance, ref IEnumerable<Pawn> __result)
         {
-            if (__instance.parent is Building_MechanoidPad)
+            if (__instance.parent is Building_MechanoidPad pad)
             {
-                __result = __instance.parent.Map.mapPawns.AllPawns.Where((Pawn p) => p.IsMechanoidHacked());
+                __result = __instance.parent.Map.mapPawns.AllPawns.Where(p => p.IsMechanoidHacked() && pad.CanTake(p));
                 return false;
             }
             return true;
@@ -74,11 +74,11 @@ namespace MechanoidFoundry
     }
 
     [HarmonyPatch(typeof(Building_Bed), "GetCurOccupant")]
-    static class Building_Bed_GetCurOccupant
+    public static class Building_Bed_GetCurOccupant
     {
-        static bool Prefix(Building_Bed __instance, int slotIndex, ref Pawn __result)
+        public static bool Prefix(Building_Bed __instance, int slotIndex, ref Pawn __result)
         {
-            if (!(__instance is Building_MechanoidPad))
+            if (!(__instance is Building_MechanoidPad pad))
             {
                 return true;
             }
@@ -93,16 +93,9 @@ namespace MechanoidFoundry
             for (int i = 0; i < list.Count; i++)
             {
                 Pawn pawn = list[i] as Pawn;
-                if (pawn != null)
+                if (pawn != null && pad.CanTake(pawn) && pawn.IsMechanoidHacked())
                 {
-                    if (pawn.IsMechanoidHacked())
-                    {
-                        __result = pawn;
-                    }
-                    else if (pawn.CurJob != null)
-                    {
-                        __result = pawn;
-                    }
+                    __result = pawn;
                 }
             }
             return false;
@@ -152,11 +145,11 @@ namespace MechanoidFoundry
         }
     }
     [HarmonyPatch(typeof(RestUtility), "CanUseBedEver")]
-    class RestUtility_CanUseBedEver
+    public static class RestUtility_CanUseBedEver
     {
-        static bool Prefix(ref bool __result, Pawn p, ThingDef bedDef)
+        public static bool Prefix(ref bool __result, Pawn p, ThingDef bedDef)
         {
-            if (!p.RaceProps.IsMechanoid && (bedDef == MechanoidFoundryDefOf.MF_MechanoidPad))
+            if (!p.RaceProps.IsMechanoid && (typeof(Building_MechanoidPad).IsAssignableFrom(bedDef.thingClass)))
             {
                 __result = false;
                 return false;

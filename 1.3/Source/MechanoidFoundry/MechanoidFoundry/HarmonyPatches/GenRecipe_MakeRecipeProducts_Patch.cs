@@ -6,6 +6,7 @@ using Verse;
 
 namespace MechanoidFoundry
 {
+
     [HarmonyPatch(typeof(GenRecipe), nameof(GenRecipe.MakeRecipeProducts))]
     public static class GenRecipe_MakeRecipeProducts_Patch
     {
@@ -29,6 +30,18 @@ namespace MechanoidFoundry
         {
             var pawnKindDef = PawnKindDef.Named(recipeDef.defName.Replace("MakeMechanoid_", ""));
             var mech = PawnGenerator.GeneratePawn(new PawnGenerationRequest(pawnKindDef, Faction.OfMechanoids));
+            var eq = mech.equipment.Primary;
+            if (eq != null)
+            {
+                mech.equipment.Remove(eq);
+            }
+            PawnComponentsUtility_AddAndRemoveDynamicComponents.AssignPawnComponents(mech);
+            mech.SetFaction(Faction.OfPlayer);
+            mech.workSettings.priorities.SetAll(0);
+            if (eq != null)
+            {
+                mech.equipment.AddEquipment(eq);
+            }
 
             var extension = mech.kindDef.GetModExtension<PawnExtension>();
             if (extension != null)
@@ -38,20 +51,8 @@ namespace MechanoidFoundry
                     InstallPart(mech, part);
                 }
             }
-
-            GenSpawn.Spawn(mech, worker.Position, worker.Map);
-            var eq = mech.equipment.Primary;
-            if (eq != null)
-            {
-                mech.equipment.Remove(eq);
-            }
-            PawnComponentsUtility_AddAndRemoveDynamicComponents.AssignPawnComponents(mech);
-            mech.SetFaction(Faction.OfPlayer);
-            if (eq != null)
-            {
-                mech.equipment.AddEquipment(eq);
-            }
             mech.needs.AddOrRemoveNeedsAsAppropriate();
+            GenSpawn.Spawn(mech, worker.Position, worker.Map);
         }
 
         private static void InstallPart(Pawn pawn, ThingDef partDef)

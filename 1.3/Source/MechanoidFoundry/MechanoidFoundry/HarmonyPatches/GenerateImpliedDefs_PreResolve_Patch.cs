@@ -23,7 +23,7 @@ namespace MechanoidFoundry
                 if (pawn.CanBeCreatedAndHacked())
                 {
                     if (!pawn.race.race.thinkTreeMain.thinkRoot.subNodes.Any(x => x is ThinkNode_Subtree subtree
-                         && subtree.treeDef == MechanoidFoundryDefOf.VFE_MainMachineBehaviourViolentActive))
+                         && subtree.treeDef == MechanoidFoundryDefOf.MF_MainMachineBehaviourViolentActive))
                     {
                         if (pawn.race.race.thinkTreeConstant != null)
                         {
@@ -59,7 +59,7 @@ namespace MechanoidFoundry
                         {
                             var toAdd = new ThinkNode_Subtree
                             {
-                                treeDef = MechanoidFoundryDefOf.VFE_MainMachineBehaviourViolentActive,
+                                treeDef = MechanoidFoundryDefOf.MF_MainMachineBehaviourViolentActive,
                             };
                             if (index + 1 < pawn.race.race.thinkTreeMain.thinkRoot.subNodes.Count)
                             {
@@ -70,11 +70,6 @@ namespace MechanoidFoundry
                                 pawn.race.race.thinkTreeMain.thinkRoot.subNodes.Add(toAdd);
                             }
                         }
-                        //for (var i = 0; i < pawn.race.race.thinkTreeMain.thinkRoot.subNodes.Count; i++)
-                        //{
-                        //    var node = pawn.race.race.thinkTreeMain.thinkRoot.subNodes[i];
-                        //    Log.Message(i + " Node: " + node + " - " + (node as ThinkNode_Subtree)?.treeDef + " - " + pawn.race.race.thinkTreeMain);
-                        //}
                     }
                 }
             }
@@ -147,7 +142,7 @@ namespace MechanoidFoundry
                 recipe.ingredients = new List<IngredientCount>();
                 foreach (var cost in props.costList)
                 {
-                    var thingDef = DefDatabase<ThingDef>.GetNamed(cost.Key);
+                    var thingDef = DefDatabase<ThingDef>.GetNamedSilentFail(cost.Key);
                     if (thingDef != null)
                     {
                         recipe.fixedIngredientFilter.thingDefs.Add(thingDef);

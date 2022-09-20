@@ -6,7 +6,21 @@ using VFE.Mechanoids.Buildings;
 
 namespace MechanoidFoundry
 {
-    public class Building_MechanoidPad : Building_Bed, IBedMachine
+    public class Building_MechanoidPad_Big : Building_MechanoidPad
+    {
+        public override bool CanTake(Pawn pawn)
+        {
+            return pawn.RaceProps.baseBodySize > 1;
+        }
+    }
+    public class Building_MechanoidPad_Small : Building_MechanoidPad
+    {
+        public override bool CanTake(Pawn pawn)
+        {
+            return pawn.RaceProps.baseBodySize <= 1;
+        }
+    }
+    public abstract class Building_MechanoidPad : Building_Bed, IBedMachine
     {
         public CompPowerTrader powerComp;
         public Pawn occupant
@@ -21,6 +35,8 @@ namespace MechanoidFoundry
                 return null;
             }
         }
+
+        public abstract bool CanTake(Pawn pawn);
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
             base.SpawnSetup(map, respawningAfterLoad);

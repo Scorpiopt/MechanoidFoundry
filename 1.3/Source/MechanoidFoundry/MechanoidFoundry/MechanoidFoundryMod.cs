@@ -17,6 +17,17 @@ namespace MechanoidFoundry
             settings = this.GetSettings<MechanoidFoundrySettings>();
             var harmony = new Harmony("MechanoidFoundry.Mod");
             harmony.PatchAll();
+            var destructivePrefix = AccessTools.Method("TacticalGroups.HarmonyPatches_CaravanSorting:AddPawnsSections");
+            if (destructivePrefix != null)
+            {
+                harmony.Patch(destructivePrefix, new HarmonyMethod(AccessTools.Method(typeof(MechanoidFoundryMod), nameof(PreventDestructivePrefix))));
+            }
+        }
+
+        public static bool PreventDestructivePrefix(ref bool __result)
+        {
+            __result = true;
+            return false;
         }
         public override void DoSettingsWindowContents(Rect inRect)
         {
@@ -70,7 +81,7 @@ namespace MechanoidFoundry
             var allMechanoids = new List<PawnKindDef>();
             foreach (var key in buildPropsByDefs.Keys.ToList())
             {
-                var pawnKind = DefDatabase<PawnKindDef>.GetNamed(key);
+                var pawnKind = DefDatabase<PawnKindDef>.GetNamedSilentFail(key);
                 if (pawnKind != null)
                 {
                     allMechanoids.Add(pawnKind);

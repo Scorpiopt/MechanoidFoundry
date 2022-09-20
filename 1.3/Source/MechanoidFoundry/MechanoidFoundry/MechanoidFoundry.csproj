@@ -67,6 +67,7 @@
     <Compile Include="HarmonyPatches\Pawn_HealthTracker_HealthTick.cs" />
     <Compile Include="HarmonyPatches\StatWorker_IsDisabledFor.cs" />
     <Compile Include="Helpers.cs" />
+    <Compile Include="JobGiver_ReturnToStation.cs" />
     <Compile Include="MechanoidFoundryDefOf.cs" />
     <Compile Include="MechanoidFoundryMod.cs" />
     <Compile Include="Recipes\RecipeModifyMechanoid.cs" />

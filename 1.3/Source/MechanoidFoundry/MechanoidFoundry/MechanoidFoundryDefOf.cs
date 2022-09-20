@@ -12,12 +12,11 @@ namespace MechanoidFoundry
     {
         public static ThingDef MF_MechanoidFoundry;
         public static RecipeDef MF_HackMechanoid;
-        public static ThingDef MF_MechanoidPad;
         public static JobDef MF_HaulCorpseToPad;
         public static WorkGiverDef MF_DoBillsMedicalMechanoidOperation;
         public static ThinkTreeDef VFE_Mechanoids_Machine_RiddableConstant;
         public static ThinkTreeDef Downed;
-        public static ThinkTreeDef VFE_MainMachineBehaviourViolentActive;
+        public static ThinkTreeDef MF_MainMachineBehaviourViolentActive;
         public static ThinkTreeDef JoinAutoJoinableCaravan;
         public static ThinkTreeDef LordDutyConstant;
         public static HediffDef MF_BatteryModule;

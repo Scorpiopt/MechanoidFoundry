@@ -11,7 +11,7 @@
   <RecipeDef ParentName="MF_SurgeryMechanoid">
     <defName>MF_HackMechanoid</defName>
     <label>hack mechanoid</label>
-    <description>Hack a mechanoid to part it part a colony.</description>
+    <description>Hack a mechanoid to make it part of the colony.</description>
     <workerClass>MechanoidFoundry.RecipeHackMechanoid</workerClass>
     <jobString>Hacking.</jobString>
     <workAmount>8500</workAmount>

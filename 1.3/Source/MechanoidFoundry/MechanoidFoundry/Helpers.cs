@@ -49,15 +49,16 @@ namespace MechanoidFoundry
             return false;
         }
 
-        public static Building_MechanoidPad GetAvailableMechanoidPad(Pawn pawn, Pawn targetPawn, bool checkForPower = false)
+        public static Building_MechanoidPad GetAvailableMechanoidPad(Pawn pawn, Pawn mech, bool checkForPower = false)
         {
-            return (Building_MechanoidPad)GenClosest.ClosestThingReachable(targetPawn.Position, targetPawn.MapHeld, ThingRequest.ForGroup(ThingRequestGroup.BuildingArtificial), PathEndMode.OnCell, TraverseParms.For(pawn, Danger.Deadly, TraverseMode.ByPawn, false), 9999f, delegate (Thing b)
+            return (Building_MechanoidPad)GenClosest.ClosestThingReachable(mech.Position, mech.MapHeld, ThingRequest.ForGroup(ThingRequestGroup.BuildingArtificial), PathEndMode.OnCell, TraverseParms.For(pawn, Danger.Deadly, TraverseMode.ByPawn, false), 9999f, delegate (Thing b)
             {
-                if (b is Building_MechanoidPad platform &&
-                !b.IsBurning() && (targetPawn.Dead ||
-                !b.IsForbidden(targetPawn) &&
-                targetPawn.CanReserve(b)) && (!checkForPower || platform.IsActive) &&
-                (targetPawn.ownership.OwnedBed == null && !platform.CompAssignableToPawn.AssignedPawns.Any() || platform.CompAssignableToPawn.AssignedPawns.Contains(targetPawn)))
+                if (b is Building_MechanoidPad platform && platform.CanTake(mech) &&
+                !b.IsBurning() && (mech.Dead ||
+                !b.IsForbidden(mech) &&
+                mech.CanReserve(b)) && (!checkForPower || platform.IsActive) &&
+                (mech.ownership.OwnedBed == null && !platform.CompAssignableToPawn.AssignedPawns.Any() 
+                || platform.CompAssignableToPawn.AssignedPawns.Contains(mech)))
                 {
                     CompFlickable flickable = platform.TryGetComp<CompFlickable>();
                     if (flickable != null && !flickable.SwitchIsOn)
