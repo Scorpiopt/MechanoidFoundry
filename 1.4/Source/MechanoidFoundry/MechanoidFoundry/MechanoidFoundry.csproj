@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{38F7B96D-823F-4236-BFE0-6F4430E85285}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MechanoidFoundry</RootNamespace>
+    <AssemblyName>MechanoidFoundry</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\Assemblies\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="VFECore">
+      <HintPath>..\..\..\..\..\VanillaExpandedFramework\1.4\Assemblies\VFECore.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Building_MechanoidPad.cs" />
+    <Compile Include="BuildProperties.cs" />
+    <Compile Include="CompMechanoidPad.cs" />
+    <Compile Include="HarmonyPatches\BuildingBed_Patches.cs" />
+    <Compile Include="HarmonyPatches\GenDraw_DrawInteractionCell_Patch.cs" />
+    <Compile Include="HarmonyPatches\GenerateImpliedDefs_PreResolve_Patch.cs" />
+    <Compile Include="HarmonyPatches\GenRecipe_MakeRecipeProducts_Patch.cs" />
+    <Compile Include="HarmonyPatches\GizmoGridDrawer_DrawGizmoGrid_Patch.cs" />
+    <Compile Include="HarmonyPatches\HealthCardUtility_DrawHealthSummary.cs" />
+    <Compile Include="HarmonyPatches\HealthCardUtility_DrawMedOperationsTab.cs" />
+    <Compile Include="HarmonyPatches\HealthCardUtility_DrawPawnHealthCard.cs" />
+    <Compile Include="HarmonyPatches\ITab_Pawn_Character_IsVisible_Patch.cs" />
+    <Compile Include="HarmonyPatches\ITab_Pawn_Health_ShouldAllowOperations.cs" />
+    <Compile Include="HarmonyPatches\JobGiver_Recharge_TryGiveJob.cs" />
+    <Compile Include="HarmonyPatches\MechanitorUtility_InMechanitorCommandRange_Patch.cs" />
+    <Compile Include="HarmonyPatches\Need_Power_PowerNeedCapacity_Patch.cs" />
+    <Compile Include="HarmonyPatches\PawnComponentsUtility_AddAndRemoveDynamicComponents.cs" />
+    <Compile Include="HarmonyPatches\PawnComponentsUtility_AddAndRemoveDynamicComponents_Patch.cs" />
+    <Compile Include="HarmonyPatches\PawnUIOverlay_DrawPawnGUIOverlay.cs" />
+    <Compile Include="HarmonyPatches\Pawn_EquipmentTracker_DestroyEquipment.cs" />
+    <Compile Include="HarmonyPatches\Pawn_EquipmentTracker_DropAllEquipment.cs" />
+    <Compile Include="HarmonyPatches\Pawn_GetDisabledWorkTypes_Patch.cs" />
+    <Compile Include="HarmonyPatches\Pawn_HealthTracker_HealthTick.cs" />
+    <Compile Include="HarmonyPatches\StatWorker_IsDisabledFor.cs" />
+    <Compile Include="HarmonyPatches\WorkGiver_DoBill_StartOrResumeBillJob_Patch.cs" />
+    <Compile Include="Helpers.cs" />
+    <Compile Include="JobGiver_ReturnToStation.cs" />
+    <Compile Include="MechanoidFoundryDefOf.cs" />
+    <Compile Include="MechanoidFoundryMod.cs" />
+    <Compile Include="Recipes\RecipeModifyMechanoid.cs" />
+    <Compile Include="Recipes\RecipeHackMechanoid.cs" />
+    <Compile Include="Recipes\RecipeMakeMechanoid.cs" />
+    <Compile Include="Recipes\RecipeRemoveModule.cs" />
+    <Compile Include="Startup.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils.cs" />
+    <Compile Include="Window_SelectItem.cs" />
+    <Compile Include="WorkGiver_DoBillHacking.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Krafs.Publicizer">
+      <Version>2.0.1</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Krafs.Rimworld.Ref">
+      <Version>1.4.3510-beta</Version>
+    </PackageReference>
+    <PackageReference Include="Lib.Harmony">
+      <Version>2.2.2</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Publicize Include="Assembly-CSharp" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

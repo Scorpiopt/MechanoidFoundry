@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThinkTreeDef>
+    <defName>MF_MainMachineBehaviourViolentActive</defName>
+	<thinkRoot Class="ThinkNode_Priority">
+      <subNodes>
+			<li Class="ThinkNode_ConditionalOfPlayerFaction">
+				<subNodes>
+				<!-- Drafted -->
+					<li Class="VFEMech.ThinkNode_ConditionalHasPower">
+						<subNodes>
+							<!-- React to close melee threat -->
+							<li Class="JobGiver_ReactToCloseMeleeThreat"/>
+							<li Class="ThinkNode_QueuedJob"/>
+							<li Class="ThinkNode_Priority">
+								<subNodes>
+									<li Class="ThinkNode_Tagger">
+										<tagToGive>DraftedOrder</tagToGive>
+										<subNodes>
+											<li Class="JobGiver_Orders"/>
+										</subNodes>
+									</li>
+								</subNodes>
+							</li>
+							<li Class="ThinkNode_ConditionalHasLord">
+								<subNodes>
+									<li Class="ThinkNode_Duty"/>
+								</subNodes>
+							</li>
+							<li Class="VFE.Mechanoids.AI.JobGivers.JobGiver_Recharge"/>
+							<li Class="JobGiver_AIFightEnemies"/>
+							<li Class="JobGiver_Work"/>
+							<li Class="MechanoidFoundry.JobGiver_ReturnToStation"/>
+							<li Class="VFE.Mechanoids.AI.JobGivers.JobGiver_StandIdle"/>
+						</subNodes>
+					</li>
+					<li Class="VFEMech.ThinkNode_ConditionalHasPower">
+						<invert>true</invert>
+						<subNodes>
+							<li Class="VFE.Mechanoids.AI.JobGivers.JobGiver_Recharge"/>
+							<li Class="MechanoidFoundry.JobGiver_ReturnToStation"/>
+							<li Class="VFE.Mechanoids.AI.JobGivers.JobGiver_StandIdle"/>
+						</subNodes>
+					</li>
+				</subNodes>
+			</li>
+      </subNodes>
+    </thinkRoot>
+  </ThinkTreeDef>
+  
+</Defs>
