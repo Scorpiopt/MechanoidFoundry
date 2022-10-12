@@ -1,11 +1,9 @@
 ﻿using HarmonyLib;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using UnityEngine;
 using Verse;
-using Verse.AI;
 
 namespace MechanoidFoundry
 {
@@ -14,14 +12,9 @@ namespace MechanoidFoundry
         public static MechanoidFoundrySettings settings;
         public MechanoidFoundryMod(ModContentPack content) : base(content)
         {
-            settings = this.GetSettings<MechanoidFoundrySettings>();
-            var harmony = new Harmony("MechanoidFoundry.Mod");
+            settings = GetSettings<MechanoidFoundrySettings>();
+            Harmony harmony = new Harmony("MechanoidFoundry.Mod");
             harmony.PatchAll();
-            var destructivePrefix = AccessTools.Method("TacticalGroups.HarmonyPatches_CaravanSorting:AddPawnsSections");
-            if (destructivePrefix != null)
-            {
-                harmony.Patch(destructivePrefix, new HarmonyMethod(AccessTools.Method(typeof(MechanoidFoundryMod), nameof(PreventDestructivePrefix))));
-            }
         }
 
         public static bool PreventDestructivePrefix(ref bool __result)
@@ -36,7 +29,7 @@ namespace MechanoidFoundry
         }
         public override string SettingsCategory()
         {
-            return this.Content.Name;
+            return Content.Name;
         }
     }
 
@@ -46,8 +39,8 @@ namespace MechanoidFoundry
         private int scrollHeightCount = 0;
         private Vector2 firstColumnPos;
         private Vector2 scrollPosition;
-        string buf1;
-        string searchKey;
+        private string buf1;
+        private string searchKey;
         public override void ExposeData()
         {
             base.ExposeData();
@@ -64,13 +57,13 @@ namespace MechanoidFoundry
         public void DoSettingsWindowContents(Rect inRect)
         {
             Text.Anchor = TextAnchor.MiddleLeft;
-            var searchLabel = new Rect(inRect.x, inRect.y, 60, 24);
+            Rect searchLabel = new Rect(inRect.x, inRect.y, 60, 24);
             Widgets.Label(searchLabel, "MF.Search".Translate());
-            var searchRect = new Rect(searchLabel.xMax + 5, searchLabel.y, 200, 24f);
+            Rect searchRect = new Rect(searchLabel.xMax + 5, searchLabel.y, 200, 24f);
             searchKey = Widgets.TextField(searchRect, searchKey);
             Text.Anchor = TextAnchor.UpperLeft;
 
-            var resetButton = new Rect(searchRect.xMax + 15, searchRect.y, 150, 24);
+            Rect resetButton = new Rect(searchRect.xMax + 15, searchRect.y, 150, 24);
             if (Widgets.ButtonText(resetButton, "Reset".Translate()))
             {
                 buildPropsByDefs.Clear();
@@ -78,10 +71,10 @@ namespace MechanoidFoundry
 
                 Startup.InitializeBuildProps();
             }
-            var allMechanoids = new List<PawnKindDef>();
-            foreach (var key in buildPropsByDefs.Keys.ToList())
+            List<PawnKindDef> allMechanoids = new List<PawnKindDef>();
+            foreach (string key in buildPropsByDefs.Keys.ToList())
             {
-                var pawnKind = DefDatabase<PawnKindDef>.GetNamedSilentFail(key);
+                PawnKindDef pawnKind = DefDatabase<PawnKindDef>.GetNamedSilentFail(key);
                 if (pawnKind != null)
                 {
                     allMechanoids.Add(pawnKind);
@@ -89,7 +82,7 @@ namespace MechanoidFoundry
             }
 
 
-            var defs = searchKey.NullOrEmpty() ? allMechanoids : allMechanoids.Where(x => x.label.Contains(searchKey.ToLower())).ToList();
+            List<PawnKindDef> defs = searchKey.NullOrEmpty() ? allMechanoids : allMechanoids.Where(x => x.label.Contains(searchKey.ToLower())).ToList();
             Rect rect = new Rect(inRect.x, searchRect.yMax + 15, inRect.width, inRect.height - 50);
             Widgets.BeginGroup(rect);
             DrawPage(rect, defs);
@@ -98,35 +91,35 @@ namespace MechanoidFoundry
 
         public void DrawPage(Rect rect, List<PawnKindDef> defs)
         {
-            var outRect = new Rect(0, 0, rect.width, rect.height);
-            var viewRect = new Rect(0, 0, rect.width - 30, scrollHeightCount);
+            Rect outRect = new Rect(0, 0, rect.width, rect.height);
+            Rect viewRect = new Rect(0, 0, rect.width - 30, scrollHeightCount);
             scrollHeightCount = 0;
             Widgets.BeginScrollView(outRect, ref scrollPosition, viewRect);
             Rect removeRect;
             Rect buttonRect = new Rect(rect.x, rect.y, 250, 24);
-            foreach (var pawnKind in defs)
+            foreach (PawnKindDef pawnKind in defs)
             {
-                var curBuildProps = buildPropsByDefs[pawnKind.defName];
+                BuildProperties curBuildProps = buildPropsByDefs[pawnKind.defName];
                 firstColumnPos.x = 0;
-                var prevY = firstColumnPos.y;
-                var pawnLabel = new Rect(firstColumnPos.x, firstColumnPos.y, 150, 24);
+                float prevY = firstColumnPos.y;
+                Rect pawnLabel = new Rect(firstColumnPos.x, firstColumnPos.y, 150, 24);
                 Widgets.Label(pawnLabel, pawnKind.LabelCap);
-                var pawnRect = new Rect(firstColumnPos.x, pawnLabel.yMax, 150, 150);
+                Rect pawnRect = new Rect(firstColumnPos.x, pawnLabel.yMax, 150, 150);
                 Graphic graphic = pawnKind.lifeStages.Last().bodyGraphicData.Graphic;
                 Material material = graphic.ExtractInnerGraphicFor(null).MatAt(Rot4.South);
                 GUI.DrawTexture(pawnRect, (Texture2D)material.mainTexture);
                 firstColumnPos.x += pawnRect.width + 15;
-                var labelRect = DoLabel(ref firstColumnPos, "MF.SetCostList".Translate());
-                var toRemove = "";
-                var craftable = "MF.Craftable".Translate();
-                var buildableRect = new Rect(firstColumnPos.x + buttonRect.width - 30 + 135 + 24 + 15, firstColumnPos.y,
+                Rect labelRect = DoLabel(ref firstColumnPos, "MF.SetCostList".Translate());
+                string toRemove = "";
+                TaggedString craftable = "MF.Craftable".Translate();
+                Rect buildableRect = new Rect(firstColumnPos.x + buttonRect.width - 30 + 135 + 24 + 15, firstColumnPos.y,
                     Text.CalcSize(craftable).x + 25, 24);
                 Widgets.CheckboxLabeled(buildableRect, craftable, ref curBuildProps.buildable);
-                foreach (var key in curBuildProps.costList.Keys.ToList())
+                foreach (string key in curBuildProps.costList.Keys.ToList())
                 {
-                    var costCount = curBuildProps.costList[key];
+                    int costCount = curBuildProps.costList[key];
                     Rect costRect = new Rect(firstColumnPos.x, firstColumnPos.y, buttonRect.width - 30, 24);
-                    var def = DefDatabase<ThingDef>.GetNamedSilentFail(key ?? "");
+                    ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(key ?? "");
                     if (def != null)
                     {
                         if (curBuildProps.buildable is false)
@@ -203,7 +196,7 @@ namespace MechanoidFoundry
         }
         private static Rect DoLabel(ref Vector2 pos, string label)
         {
-            var labelRect = new Rect(pos.x, pos.y, 250, 24);
+            Rect labelRect = new Rect(pos.x, pos.y, 250, 24);
             Widgets.Label(labelRect, label);
             pos.y += 24;
             return labelRect;
@@ -211,7 +204,7 @@ namespace MechanoidFoundry
 
         private static Rect DoButton(ref Vector2 pos, string label, Action action, bool active = true)
         {
-            var buttonRect = new Rect(pos.x, pos.y, 250, 24);
+            Rect buttonRect = new Rect(pos.x, pos.y, 250, 24);
             pos.y += 24;
             if (Widgets.ButtonText(buttonRect, label, active: active))
             {
