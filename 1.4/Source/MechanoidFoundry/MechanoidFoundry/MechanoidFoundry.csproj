@@ -47,8 +47,10 @@
   <ItemGroup>
     <Compile Include="Building_MechanoidPad.cs" />
     <Compile Include="BuildProperties.cs" />
+    <Compile Include="CompBiotechChargingPad.cs" />
     <Compile Include="CompMechanoidPad.cs" />
     <Compile Include="HarmonyPatches\BuildingBed_Patches.cs" />
+    <Compile Include="HarmonyPatches\FloatMenuMakerMap_AddHumanlikeOrders_Patch.cs" />
     <Compile Include="HarmonyPatches\GenDraw_DrawInteractionCell_Patch.cs" />
     <Compile Include="HarmonyPatches\GenerateImpliedDefs_PreResolve_Patch.cs" />
     <Compile Include="HarmonyPatches\GenRecipe_MakeRecipeProducts_Patch.cs" />
@@ -58,17 +60,22 @@
     <Compile Include="HarmonyPatches\HealthCardUtility_DrawPawnHealthCard.cs" />
     <Compile Include="HarmonyPatches\ITab_Pawn_Character_IsVisible_Patch.cs" />
     <Compile Include="HarmonyPatches\ITab_Pawn_Health_ShouldAllowOperations.cs" />
-    <Compile Include="HarmonyPatches\JobGiver_Recharge_TryGiveJob.cs" />
+    <Compile Include="HarmonyPatches\JobGiver_GetEnergy_GetMinAutorechargeThreshold_Patch.cs" />
+    <Compile Include="HarmonyPatches\JobGiver_Recharge_TryGiveJob_Patch.cs" />
+    <Compile Include="HarmonyPatches\JobGiver_WanderColony_TryGiveJob_Patch.cs" />
     <Compile Include="HarmonyPatches\MechanitorUtility_InMechanitorCommandRange_Patch.cs" />
     <Compile Include="HarmonyPatches\Need_Power_PowerNeedCapacity_Patch.cs" />
     <Compile Include="HarmonyPatches\PawnComponentsUtility_AddAndRemoveDynamicComponents.cs" />
-    <Compile Include="HarmonyPatches\PawnComponentsUtility_AddAndRemoveDynamicComponents_Patch.cs" />
+    <Compile Include="HarmonyPatches\PawnRenderer_DrawPawnBody_Patch.cs" />
     <Compile Include="HarmonyPatches\PawnUIOverlay_DrawPawnGUIOverlay.cs" />
     <Compile Include="HarmonyPatches\Pawn_EquipmentTracker_DestroyEquipment.cs" />
     <Compile Include="HarmonyPatches\Pawn_EquipmentTracker_DropAllEquipment.cs" />
     <Compile Include="HarmonyPatches\Pawn_GetDisabledWorkTypes_Patch.cs" />
-    <Compile Include="HarmonyPatches\Pawn_HealthTracker_HealthTick.cs" />
+    <Compile Include="HarmonyPatches\Pawn_IsColonyMechPlayerControlled_Patch.cs" />
+    <Compile Include="HarmonyPatches\Pawn_NeedsTracker_ShouldHaveNeed_Patch.cs" />
     <Compile Include="HarmonyPatches\StatWorker_IsDisabledFor.cs" />
+    <Compile Include="HarmonyPatches\ThinkNode_ConditionalWorkMech_Satisfied_Patch.cs" />
+    <Compile Include="HarmonyPatches\ThinkNode_ConditionalWorkMode_Satisfied_Patch.cs" />
     <Compile Include="HarmonyPatches\WorkGiver_DoBill_StartOrResumeBillJob_Patch.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="JobGiver_ReturnToStation.cs" />
@@ -91,7 +98,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Krafs.Rimworld.Ref">
-      <Version>1.4.3514-beta</Version>
+      <Version>1.4.3542</Version>
     </PackageReference>
     <PackageReference Include="Lib.Harmony">
       <Version>2.2.2</Version>

@@ -19,52 +19,56 @@ namespace MechanoidFoundry
             {
                 if (pawn.CanBeCreatedAndHacked())
                 {
-                    if (!pawn.race.race.thinkTreeMain.thinkRoot.subNodes.Any(x => x is ThinkNode_Subtree subtree
-                         && subtree.treeDef == MechanoidFoundryDefOf.MF_MainMachineBehaviourViolentActive))
+                    if (ModsConfig.BiotechActive is false)
                     {
-                        if (pawn.race.race.thinkTreeConstant != null)
+                        var MF_MainMachineBehaviourViolentActive = DefDatabase<ThinkTreeDef>.GetNamed("MF_MainMachineBehaviourViolentActive");
+                        if (!pawn.race.race.thinkTreeMain.thinkRoot.subNodes.Any(x => x is ThinkNode_Subtree subtree
+                            && subtree.treeDef == MF_MainMachineBehaviourViolentActive))
                         {
-                            var node = pawn.race.race.thinkTreeConstant.thinkRoot.subNodes
-                                .Find(x => x is ThinkNode_ConditionalCanDoConstantThinkTreeJobNow);
-                            if (node != null)
+                            if (pawn.race.race.thinkTreeConstant != null)
                             {
-                                if (!node.subNodes.Exists(x => x is ThinkNode_Subtree subtree && subtree.treeDef == MechanoidFoundryDefOf.JoinAutoJoinableCaravan))
+                                var node = pawn.race.race.thinkTreeConstant.thinkRoot.subNodes
+                                    .Find(x => x is ThinkNode_ConditionalCanDoConstantThinkTreeJobNow);
+                                if (node != null)
                                 {
-                                    node.subNodes.Add(new ThinkNode_Subtree
+                                    if (!node.subNodes.Exists(x => x is ThinkNode_Subtree subtree && subtree.treeDef == MechanoidFoundryDefOf.JoinAutoJoinableCaravan))
                                     {
-                                        treeDef = MechanoidFoundryDefOf.JoinAutoJoinableCaravan,
-                                    });
-                                }
+                                        node.subNodes.Add(new ThinkNode_Subtree
+                                        {
+                                            treeDef = MechanoidFoundryDefOf.JoinAutoJoinableCaravan,
+                                        });
+                                    }
 
-                                if (!node.subNodes.Exists(x => x is ThinkNode_Subtree subtree && subtree.treeDef == MechanoidFoundryDefOf.LordDutyConstant))
-                                {
-                                    node.subNodes.Add(new ThinkNode_Subtree
+                                    if (!node.subNodes.Exists(x => x is ThinkNode_Subtree subtree && subtree.treeDef == MechanoidFoundryDefOf.LordDutyConstant))
                                     {
-                                        treeDef = MechanoidFoundryDefOf.LordDutyConstant,
-                                    });
+                                        node.subNodes.Add(new ThinkNode_Subtree
+                                        {
+                                            treeDef = MechanoidFoundryDefOf.LordDutyConstant,
+                                        });
+                                    }
                                 }
-                            }
-                        }
-                        else
-                        {
-                            pawn.race.race.thinkTreeConstant = MechanoidFoundryDefOf.VFE_Mechanoids_Machine_RiddableConstant;
-                        }
-
-                        int index = pawn.race.race.thinkTreeMain.thinkRoot.subNodes.FindIndex(x => x is ThinkNode_Subtree subtree
-                            && subtree.treeDef == MechanoidFoundryDefOf.Downed);
-                        if (index >= 0)
-                        {
-                            var toAdd = new ThinkNode_Subtree
-                            {
-                                treeDef = MechanoidFoundryDefOf.MF_MainMachineBehaviourViolentActive,
-                            };
-                            if (index + 1 < pawn.race.race.thinkTreeMain.thinkRoot.subNodes.Count)
-                            {
-                                pawn.race.race.thinkTreeMain.thinkRoot.subNodes.Insert(index + 1, toAdd);
                             }
                             else
                             {
-                                pawn.race.race.thinkTreeMain.thinkRoot.subNodes.Add(toAdd);
+                                pawn.race.race.thinkTreeConstant = MechanoidFoundryDefOf.VFE_Mechanoids_Machine_RiddableConstant;
+                            }
+
+                            int index = pawn.race.race.thinkTreeMain.thinkRoot.subNodes.FindIndex(x => x is ThinkNode_Subtree subtree
+                                && subtree.treeDef == MechanoidFoundryDefOf.Downed);
+                            if (index >= 0)
+                            {
+                                var toAdd = new ThinkNode_Subtree
+                                {
+                                    treeDef = MF_MainMachineBehaviourViolentActive,
+                                };
+                                if (index + 1 < pawn.race.race.thinkTreeMain.thinkRoot.subNodes.Count)
+                                {
+                                    pawn.race.race.thinkTreeMain.thinkRoot.subNodes.Insert(index + 1, toAdd);
+                                }
+                                else
+                                {
+                                    pawn.race.race.thinkTreeMain.thinkRoot.subNodes.Add(toAdd);
+                                }
                             }
                         }
                     }

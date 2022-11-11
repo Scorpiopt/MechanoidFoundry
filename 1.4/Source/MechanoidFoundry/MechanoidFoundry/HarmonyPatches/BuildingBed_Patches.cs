@@ -147,12 +147,13 @@ namespace MechanoidFoundry
         {
             if (bed is Building_MechanoidPad)
             {
-                __result = bed.GetSleepingSlotPos(1);
+                __result = bed.GetSleepingSlotPos(0);
                 return false;
             }
             return true;
         }
     }
+
     [HarmonyPatch(typeof(RestUtility), "CanUseBedEver")]
     public static class RestUtility_CanUseBedEver
     {
@@ -164,6 +165,18 @@ namespace MechanoidFoundry
                 return false;
             }
             return true;
+        }
+    }
+
+    [HarmonyPatch(typeof(RestUtility), "CanUseBedNow")]
+    public static class RestUtility_CanUseBedNow
+    {
+        public static void Postfix(ref bool __result, Thing bedThing, Pawn sleeper)
+        {
+            if (!__result && sleeper.IsMechanoidHacked() && bedThing is Building_MechanoidPad)
+            {
+                __result = true;
+            }
         }
     }
 
@@ -202,9 +215,15 @@ namespace MechanoidFoundry
             if (__instance.parent is Building_MechanoidPad pad && pawn.IsMechanoidHacked())
             {
                 var comp = pad.GetComp<CompMachineChargingStation>();
-                comp.myPawn = pawn;
-                var comp2 = pawn.GetComp<CompMachine>();
-                comp2.myBuilding = pad;
+                if (comp != null)
+                {
+                    comp.myPawn = pawn;
+                    var comp2 = pawn.GetComp<CompMachine>();
+                    if (comp2 != null)
+                    {
+                        comp2.myBuilding = pad;
+                    }
+                }
             }
         }
     }
@@ -217,9 +236,15 @@ namespace MechanoidFoundry
             if (__instance.parent is Building_MechanoidPad pad && pawn.IsMechanoidHacked())
             {
                 var comp = pad.GetComp<CompMachineChargingStation>();
-                comp.myPawn = null;
-                var comp2 = pawn.GetComp<CompMachine>();
-                comp2.myBuilding = null;
+                if (comp != null)
+                {
+                    comp.myPawn = null;
+                    var comp2 = pawn.GetComp<CompMachine>();
+                    if (comp2 != null)
+                    {
+                        comp2.myBuilding = null;
+                    }
+                }
             }
         }
     }

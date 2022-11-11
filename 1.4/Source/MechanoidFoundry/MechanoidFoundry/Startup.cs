@@ -69,22 +69,27 @@ namespace MechanoidFoundry
                             compClass = typeof(CompMachine)
                         });
                     }
-                    var modExtension = pawn.race.GetModExtension<MechanoidExtension>();
-                    if (modExtension is null)
+
+                    if (ModsConfig.BiotechActive is false)
                     {
-                        if (pawn.race.modExtensions is null)
+                        var modExtension = pawn.race.GetModExtension<MechanoidExtension>();
+                        if (modExtension is null)
                         {
-                            pawn.race.modExtensions = new List<DefModExtension>();
+                            if (pawn.race.modExtensions is null)
+                            {
+                                pawn.race.modExtensions = new List<DefModExtension>();
+                            }
+                            pawn.race.modExtensions.Add(new MechanoidExtension
+                            {
+                                hasPowerNeedWhenHacked = true,
+                            });
                         }
-                        pawn.race.modExtensions.Add(new MechanoidExtension
+                        else
                         {
-                            hasPowerNeedWhenHacked = true,
-                        });
+                            modExtension.hasPowerNeedWhenHacked = true;
+                        }
                     }
-                    else
-                    {
-                        modExtension.hasPowerNeedWhenHacked = true;
-                    }
+
                     foreach (var recipe in recipesOnMechanoids)
                     {
                         pawn.race.AllRecipes.Add(recipe);

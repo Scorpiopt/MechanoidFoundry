@@ -4,9 +4,17 @@ using Verse;
 
 namespace MechanoidFoundry
 {
+
     [HarmonyPatch(typeof(PawnComponentsUtility), "AddAndRemoveDynamicComponents")]
     public static class PawnComponentsUtility_AddAndRemoveDynamicComponents
     {
+        public static void Prefix(Pawn pawn)
+        {
+            if (pawn.IsMechanoidHacked())
+            {
+                pawn.StripBiotechComps();
+            }
+        }
         public static void Postfix(Pawn pawn)
         {
             MakeComponentsToHackedMechanoid(pawn);
@@ -44,6 +52,9 @@ namespace MechanoidFoundry
                 pawn.workSettings.EnableAndInitializeIfNotAlreadyInitialized();
                 pawn.workSettings.priorities.SetAll(0);
             }
+            pawn.Notify_DisabledWorkTypesChanged();
+            pawn.workSettings.EnableAndInitialize();
+            pawn.workSettings.CacheWorkGiversInOrder();
             if (pawn.interactions == null)
             {
                 pawn.interactions = new Pawn_InteractionsTracker(pawn);

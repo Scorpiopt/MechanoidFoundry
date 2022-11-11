@@ -23,7 +23,7 @@ namespace MechanoidFoundry
         public static MethodInfo ComponentCache_ResetCompCache_Info = AccessTools.Method("PerformanceOptimizer.ComponentCache:ResetCompCache");
         public static void StripBiotechComps(this Pawn mech)
         {
-            mech.AllComps.RemoveAll(x => x is CompMechRepairable || x is CompOverseerSubject);
+            mech.AllComps.RemoveAll(x => x is CompOverseerSubject);
             ComponentCache_ResetCompCache_Info?.Invoke(null, new object[] { mech });
         }
         public static bool Spawnable(this ThingDef item)
