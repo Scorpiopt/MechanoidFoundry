@@ -139,7 +139,7 @@
 		</tools>
 		<race>
 			<intelligence>ToolUser</intelligence>
-			<thinkTreeMain>VFE_Mechanoids_Machine</thinkTreeMain>
+			<thinkTreeMain>VFE_MainMachineBehaviourViolentActive</thinkTreeMain>
 			<body>Lancer</body>
 			<baseHealthScale>0.72</baseHealthScale>
 			<baseBodySize>1</baseBodySize>

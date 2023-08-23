@@ -2,6 +2,7 @@
 using RimWorld;
 using Verse;
 using Verse.AI;
+using VFECore;
 
 namespace MechanoidFoundry
 {
@@ -16,6 +17,19 @@ namespace MechanoidFoundry
                 var job = jobgiver.TryGiveJob(pawn);
                 if (job != null)
                 {
+                    Building_Bed building = null;
+                    if (job.def == JobDefOf.Goto)
+                    {
+                        building = job.targetA.Cell.GetFirstThing<Building_Bed>(pawn.Map);
+                    }
+                    else if (job.def == VFEDefOf.VFE_Mechanoids_Recharge)
+                    {
+                        building = job.targetA.Thing as Building_Bed;
+                    }
+                    if (building != null) 
+                    {
+                        building.CompAssignableToPawn.TryAssignPawn(pawn);
+                    }
                     __result = job;
                     return false;
                 }

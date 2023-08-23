@@ -39,7 +39,7 @@
       <li Class="CompProperties_Flickable"/>
       <li Class="CompProperties_Breakdownable"/>
     </comps>
-    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <interactionCellOffset>(0,0,-3)</interactionCellOffset>
     <hasInteractionCell>true</hasInteractionCell>
     <graphicData>
       <texPath>Things/Building/Production/MechanoidFoundry</texPath>

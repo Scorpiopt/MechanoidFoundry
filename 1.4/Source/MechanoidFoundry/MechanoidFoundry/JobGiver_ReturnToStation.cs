@@ -7,6 +7,23 @@ using VFECore;
 
 namespace MechanoidFoundry
 {
+    public class JobGiver_GotoStationForced : ThinkNode_JobGiver
+    {
+        public override Job TryGiveJob(Pawn pawn)
+        {
+            var pad = pawn.ownership.OwnedBed as Building_MechanoidPad;
+            if (pad != null)
+            {
+                var comp = pad.GetComp<CompBiotechChargingPad>();
+                if (comp.forceStay)
+                {
+                    return comp.GotoPad(pawn);
+                }
+            }
+            return null;
+        }
+
+    }
     public class JobGiver_ReturnToStation : ThinkNode_JobGiver
     {
         public override Job TryGiveJob(Pawn pawn)

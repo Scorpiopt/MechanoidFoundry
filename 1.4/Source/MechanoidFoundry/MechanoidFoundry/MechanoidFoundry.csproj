@@ -51,7 +51,6 @@
     <Compile Include="CompMechanoidPad.cs" />
     <Compile Include="HarmonyPatches\BuildingBed_Patches.cs" />
     <Compile Include="HarmonyPatches\FloatMenuMakerMap_AddHumanlikeOrders_Patch.cs" />
-    <Compile Include="HarmonyPatches\GenDraw_DrawInteractionCell_Patch.cs" />
     <Compile Include="HarmonyPatches\GenerateImpliedDefs_PreResolve_Patch.cs" />
     <Compile Include="HarmonyPatches\GenRecipe_MakeRecipeProducts_Patch.cs" />
     <Compile Include="HarmonyPatches\GizmoGridDrawer_DrawGizmoGrid_Patch.cs" />
