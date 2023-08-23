@@ -61,6 +61,7 @@
     <Compile Include="HarmonyPatches\ITab_Pawn_Health_ShouldAllowOperations.cs" />
     <Compile Include="HarmonyPatches\JobGiver_GetEnergy_GetMinAutorechargeThreshold_Patch.cs" />
     <Compile Include="HarmonyPatches\JobGiver_Recharge_TryGiveJob_Patch.cs" />
+    <Compile Include="HarmonyPatches\JobGiver_ReturnToStationIdle_TryGiveJob_Patch.cs" />
     <Compile Include="HarmonyPatches\JobGiver_WanderColony_TryGiveJob_Patch.cs" />
     <Compile Include="HarmonyPatches\MechanitorUtility_InMechanitorCommandRange_Patch.cs" />
     <Compile Include="HarmonyPatches\Need_Power_PowerNeedCapacity_Patch.cs" />
