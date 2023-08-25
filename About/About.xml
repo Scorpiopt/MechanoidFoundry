@@ -26,5 +26,8 @@
 		<li>brrainz.harmony</li>
 		<li>OskarPotocki.VanillaFactionsExpanded.Core</li>
 	</loadAfter>
+	<incompatibleWith>
+		<li>Impregnating.Mechanoids</li>
+	</incompatibleWith>
 	<description></description>
 </ModMetaData>
