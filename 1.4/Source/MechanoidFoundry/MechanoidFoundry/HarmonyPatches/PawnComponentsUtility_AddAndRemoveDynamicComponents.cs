@@ -4,7 +4,6 @@ using Verse;
 
 namespace MechanoidFoundry
 {
-
     [HarmonyPatch(typeof(PawnComponentsUtility), "AddAndRemoveDynamicComponents")]
     public static class PawnComponentsUtility_AddAndRemoveDynamicComponents
     {

@@ -89,7 +89,6 @@ namespace MechanoidFoundry
                     var recipeDef = GetMechRecipeDef(pawn);
                     recipeDef.PostLoad();
                     DefDatabase<RecipeDef>.Add(recipeDef);
-                    Log.Message("Adding recipe " + pawn);
                 }
             }
         }

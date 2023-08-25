@@ -17,11 +17,6 @@ namespace MechanoidFoundry
             harmony.PatchAll();
         }
 
-        public static bool PreventDestructivePrefix(ref bool __result)
-        {
-            __result = true;
-            return false;
-        }
         public override void DoSettingsWindowContents(Rect inRect)
         {
             base.DoSettingsWindowContents(inRect);

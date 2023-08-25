@@ -5,7 +5,6 @@ using VFE.Mechanoids;
 
 namespace MechanoidFoundry
 {
-
     [StaticConstructorOnStartup]
     public static class Startup
     {
@@ -58,6 +57,7 @@ namespace MechanoidFoundry
                     {
                         pawn.race.comps.Add(new CompProperties_Draftable());
                     }
+
                     var compMachineProps = pawn.race.GetCompProperties<CompProperties_Machine>();
                     if (compMachineProps is null)
                     {
@@ -69,7 +69,7 @@ namespace MechanoidFoundry
                             compClass = typeof(CompMachine)
                         });
                     }
-
+                    
                     if (ModsConfig.BiotechActive is false)
                     {
                         var modExtension = pawn.race.GetModExtension<MechanoidExtension>();
@@ -89,12 +89,12 @@ namespace MechanoidFoundry
                             modExtension.hasPowerNeedWhenHacked = true;
                         }
                     }
-
+                    
                     foreach (var recipe in recipesOnMechanoids)
                     {
                         pawn.race.AllRecipes.Add(recipe);
                     }
-
+                    
                     pawn.race.AllRecipes.Add(MechanoidFoundryDefOf.MF_HackMechanoid);
                     pawn.race.race.corpseDef.recipes.Add(MechanoidFoundryDefOf.MF_HackMechanoid);
                 }
