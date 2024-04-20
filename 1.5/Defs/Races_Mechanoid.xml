@@ -52,7 +52,6 @@
 			<baseHealthScale>2.16</baseHealthScale>
 			<baseBodySize>1.6</baseBodySize>
 			<soundMeleeHitPawn>Pawn_Melee_Punch_HitPawn</soundMeleeHitPawn>
-			<soundMeleeHitBuilding>Pawn_Melee_Punch_HitBuilding</soundMeleeHitBuilding>
 			<soundMeleeMiss>Pawn_Melee_Punch_Miss</soundMeleeMiss>
 		</race>
 	</ThingDef>
@@ -144,7 +143,6 @@
 			<baseHealthScale>0.72</baseHealthScale>
 			<baseBodySize>1</baseBodySize>
 			<soundMeleeHitPawn>Pawn_Melee_Punch_HitPawn</soundMeleeHitPawn>
-			<soundMeleeHitBuilding>Pawn_Melee_Punch_HitBuilding</soundMeleeHitBuilding>
 			<soundMeleeMiss>Pawn_Melee_Punch_Miss</soundMeleeMiss>
 			<lifeStageAges>
 				<li>
