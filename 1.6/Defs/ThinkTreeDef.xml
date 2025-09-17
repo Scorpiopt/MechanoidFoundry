@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThinkTreeDef>
+    <defName>MF_PlayerMechanoid</defName>
+    <thinkRoot Class="ThinkNode_Priority">
+      <subNodes>
+
+        <li Class="ThinkNode_QueuedJob" />
+        <li Class="MechanoidFoundry.ThinkNode_Conditional_MechanoidHacked">
+          <subNodes>
+            <li Class="ThinkNode_Tagger">
+              <tagToGive>DraftedOrder</tagToGive>
+              <subNodes>
+                <li Class="JobGiver_MoveToStandable" />
+                <li Class="JobGiver_Orders" />
+              </subNodes>
+            </li>
+          </subNodes>
+        </li>
+
+        <li Class="ThinkNode_ConditionalOfPlayerFaction">
+          <subNodes>
+            <li Class="MechanoidFoundry.ThinkNode_ConditionalHasPower">
+              <subNodes>
+                <li Class="MechanoidFoundry.JobGiver_Recharge" />
+                <li Class="JobGiver_AIFightEnemies" />
+                <li Class="JobGiver_Work" />
+                <li Class="MechanoidFoundry.JobGiver_ReturnToStation" />
+                <li Class="MechanoidFoundry.JobGiver_StandIdle" />
+              </subNodes>
+            </li>
+            <li Class="MechanoidFoundry.ThinkNode_ConditionalHasPower">
+              <invert>true</invert>
+              <subNodes>
+                <li Class="MechanoidFoundry.JobGiver_Recharge" />
+                <li Class="MechanoidFoundry.JobGiver_ReturnToStation" />
+                <li Class="MechanoidFoundry.JobGiver_StandIdle" />
+              </subNodes>
+            </li>
+          </subNodes>
+        </li>
+      </subNodes>
+    </thinkRoot>
+  </ThinkTreeDef>
+
+</Defs>

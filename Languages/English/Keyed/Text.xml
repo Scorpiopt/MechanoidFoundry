@@ -8,4 +8,6 @@
 	<MF.SetCostList>Set craft ingredients</MF.SetCostList>
 	<MF.Count>Count</MF.Count>
 	<MF.Craftable>Craftable</MF.Craftable>
+	<MF_ForceRecharge>Force Recharge</MF_ForceRecharge>
+	<MF_ForceRechargeDesc>Force the mechanoid on this pad to recharge.</MF_ForceRechargeDesc>
 </LanguageData>

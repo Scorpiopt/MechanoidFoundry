@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BuildingBase" Name="MF_MechanoidPadBase" Abstract="True">
+    <castEdgeShadows>false</castEdgeShadows>
+	<rotatable>false</rotatable>
+    <drawGUIOverlay>True</drawGUIOverlay>
+    <altitudeLayer>Building</altitudeLayer>
+    <useHitPoints>True</useHitPoints>
+    <passability>PassThroughOnly</passability>
+    <designationCategory>Misc</designationCategory>
+    <surfaceType>Item</surfaceType>
+	<tickerType>Normal</tickerType>
+	<comps>
+      <li Class="CompProperties_Flickable"/>
+	  <li Class="CompProperties_Forbiddable" />
+      <li Class="CompProperties_AssignableToPawn">
+        <drawAssignmentOverlay>false</drawAssignmentOverlay>
+        <compClass>CompAssignableToPawn_Bed</compClass>
+      </li>
+    </comps>
+	<building>
+		<bed_humanlike>false</bed_humanlike>
+		<bed_showSleeperBody>True</bed_showSleeperBody>
+		<canPlaceOverImpassablePlant>false</canPlaceOverImpassablePlant>
+		<ai_chillDestination>false</ai_chillDestination>
+	</building>
+    <researchPrerequisites>
+      <li>AdvancedFabrication</li>
+      <li>ShipComputerCore</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <ThingDef ParentName="MF_MechanoidPadBase">
+    <defName>MF_MechanoidPadSmall</defName>
+    <label>small mechanoid pad</label>
+    <description>Mechanoid pad for charging and repairing small mechanoids.</description>
+	<thingClass>MechanoidFoundry.Building_MechanoidPad_Small</thingClass>
+    <uiIconScale>0.80</uiIconScale>
+    <graphicData>
+      <texPath>Things/Building/Production/MechanoidPad</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <size>(1,1)</size>
+    <fillPercent>0.2</fillPercent>
+    <pathCost>35</pathCost>
+    <costList>
+      <Steel>22</Steel>
+      <Plasteel>15</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+      <ComponentSpacer>1</ComponentSpacer>
+    </costList>
+    <statBases>
+      <WorkToBuild>2000</WorkToBuild>
+      <MaxHitPoints>100</MaxHitPoints>
+      <Flammability>1.0</Flammability>
+    </statBases>
+	<comps>
+		<li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <shortCircuitInRain>true</shortCircuitInRain>
+        <basePowerConsumption>50</basePowerConsumption>
+      </li>
+	  <li Class="MechanoidFoundry.CompProperties_MechanoidPad">
+	 <compClass>MechanoidFoundry.CompMechanoidPad</compClass>
+	 <extraChargingPower>700</extraChargingPower>
+	 <hoursToRecharge>24</hoursToRecharge>
+	  </li>
+	</comps>
+  </ThingDef>
+  
+  <ThingDef ParentName="MF_MechanoidPadBase">
+    <defName>MF_MechanoidPadBig</defName>
+    <label>big mechanoid pad</label>
+    <description>Mechanoid pad for charging and repairing big mechanoids.</description>
+	<thingClass>MechanoidFoundry.Building_MechanoidPad_Big</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Production/MechanoidPad</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(3,3)</drawSize>
+    </graphicData>
+    <size>(3,3)</size>
+    <fillPercent>0.5</fillPercent>
+    <pathCost>70</pathCost>
+    <costList>
+      <Steel>45</Steel>
+      <Plasteel>30</Plasteel>
+      <ComponentIndustrial>5</ComponentIndustrial>
+      <ComponentSpacer>2</ComponentSpacer>
+    </costList>
+    <statBases>
+      <WorkToBuild>4000</WorkToBuild>
+      <MaxHitPoints>200</MaxHitPoints>
+      <Flammability>1.0</Flammability>
+    </statBases>
+	<comps>
+		<li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <shortCircuitInRain>true</shortCircuitInRain>
+        <basePowerConsumption>100</basePowerConsumption>
+      </li>
+	  <li Class="MechanoidFoundry.CompProperties_MechanoidPad">
+	 <compClass>MechanoidFoundry.CompMechanoidPad</compClass>
+	 <extraChargingPower>1400</extraChargingPower>
+	 <hoursToRecharge>24</hoursToRecharge>
+	  </li>
+	</comps>
+  </ThingDef>
+
+</Defs>

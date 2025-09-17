@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <NeedDef>
+    <defName>MF_Energy</defName>
+    <needClass>MechanoidFoundry.Need_Energy</needClass>
+    <label>energy</label>
+    <description>Energy is the measure of a mechanoid's remaining power. If it reaches zero, the mechanoid will enter a low-power state and seek a charging station.</description>
+    <minIntelligence>ToolUser</minIntelligence>
+    <showForCaravanMembers>true</showForCaravanMembers>
+    <fallPerDay>3</fallPerDay>
+    <seekerRisePerHour>0.2</seekerRisePerHour>
+    <major>true</major>
+    <showOnNeedList>true</showOnNeedList>
+  </NeedDef>
+</Defs>

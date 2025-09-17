@@ -15,4 +15,8 @@
 		<li IfModNotActive="Ludeon.RimWorld.Biotech">1.5/NoBiotech</li>
 		<li IfModActive="Ludeon.RimWorld.Biotech">1.5/Biotech</li>
 	</v1.5>
+	<v1.6>
+		<li>/</li>
+		<li>1.6</li>
+	</v1.6>
 </loadFolders>

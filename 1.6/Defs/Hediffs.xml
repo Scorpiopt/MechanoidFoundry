@@ -1,0 +1,17 @@
+<Defs>
+
+	<HediffDef>
+		<defName>MF_MechanoidHacked</defName>
+		<label>hacked mechanoid</label>
+		<description>hacked mechanoid</description>
+		<hediffClass>Hediff</hediffClass>
+		<isBad>false</isBad>
+		<stages>
+			<li>
+				<becomeVisible>false</becomeVisible>
+			</li>
+		</stages>
+	</HediffDef>
+	
+</Defs>
+
