@@ -17,5 +17,6 @@ namespace MechanoidFoundry
         public static HediffDef MF_MechanoidHacked;
         [MayRequireBiotech] public static NeedDef MechEnergy;
         public static JobDef MF_Recharge;
+        public static NeedDef MF_Energy;
     }
 }

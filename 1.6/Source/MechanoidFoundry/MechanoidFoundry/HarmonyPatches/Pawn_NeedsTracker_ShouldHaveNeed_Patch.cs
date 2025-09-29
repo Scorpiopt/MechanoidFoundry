@@ -9,11 +9,11 @@ namespace MechanoidFoundry
     {
         public static void Postfix(Pawn ___pawn, NeedDef nd, ref bool __result)
         {
-            if (ModsConfig.BiotechActive is false && __result is false && ___pawn.IsMechanoidHacked() && nd == MechanoidFoundryDefOf.MechEnergy)
+            if (ModsConfig.BiotechActive is false && __result is false && ___pawn.IsMechanoidHacked() && nd == MechanoidFoundryDefOf.MF_Energy)
             {
                 __result = true;
             }
-            if (ModsConfig.BiotechActive && nd == MechanoidFoundryDefOf.MechEnergy)
+            if (ModsConfig.BiotechActive && nd == MechanoidFoundryDefOf.MF_Energy)
             {
                 __result = false;
             }
