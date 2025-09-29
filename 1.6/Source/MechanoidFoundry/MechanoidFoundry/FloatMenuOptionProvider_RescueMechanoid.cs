@@ -13,7 +13,7 @@ namespace MechanoidFoundry
 
         public override IEnumerable<FloatMenuOption> GetOptionsFor(Pawn clickedPawn, FloatMenuContext context)
         {
-            if (clickedPawn.Downed && context.FirstSelectedPawn.CanReserveAndReach(clickedPawn, PathEndMode.OnCell, Danger.Deadly, 1, -1, null, ignoreOtherReservations: true) && !clickedPawn.InBed() && clickedPawn.IsMechanoidHacked())
+            if (clickedPawn.RaceProps.IsMechanoid && clickedPawn.Downed && context.FirstSelectedPawn.CanReserveAndReach(clickedPawn, PathEndMode.OnCell, Danger.Deadly, 1, -1, null, ignoreOtherReservations: true) && !clickedPawn.InBed() && (clickedPawn.IsMechanoidHacked() || clickedPawn.BillStack.Bills.Any(x => x.recipe.Worker is RecipeHackMechanoid)))
             {
                 TaggedString taggedString = "Rescue".Translate(clickedPawn.LabelCap, clickedPawn);
                 yield return FloatMenuUtility.DecoratePrioritizedTask(new FloatMenuOption(taggedString, delegate
@@ -30,13 +30,13 @@ namespace MechanoidFoundry
                             Messages.Message("CannotRescue".Translate() + ": " + "PawnNoLongerAvailable".Translate(), clickedPawn, MessageTypeDefOf.RejectInput, historical: false);
                             return;
                         }
-                        
+
                         if (pad.Destroyed || !pad.Spawned)
                         {
                             Messages.Message("CannotRescue".Translate() + ": " + "MechanoidPadNoLongerAvailable".Translate(), pad, MessageTypeDefOf.RejectInput, historical: false);
                             return;
                         }
-                        
+
                         Job job = JobMaker.MakeJob(JobDefOf.Rescue, clickedPawn, pad);
                         job.count = 1;
                         context.FirstSelectedPawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);

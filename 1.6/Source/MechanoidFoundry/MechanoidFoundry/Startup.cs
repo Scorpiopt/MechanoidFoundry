@@ -50,15 +50,21 @@ namespace MechanoidFoundry
             {
                 if (pawn.CanBeCreatedAndHacked())
                 {
-
-                    
                     foreach (var recipe in recipesOnMechanoids)
                     {
-                        pawn.race.AllRecipes.Add(recipe);
+                        if (pawn.race.AllRecipes.Contains(recipe) is false)
+                        {
+                            pawn.race.AllRecipes.Add(recipe);
+                        }
                     }
-                    
-                    pawn.race.AllRecipes.Add(MechanoidFoundryDefOf.MF_HackMechanoid);
-                    pawn.race.race.corpseDef.recipes.Add(MechanoidFoundryDefOf.MF_HackMechanoid);
+                    if (pawn.race.AllRecipes.Contains(MechanoidFoundryDefOf.MF_HackMechanoid) is false)
+                    {
+                        pawn.race.AllRecipes.Add(MechanoidFoundryDefOf.MF_HackMechanoid);
+                    }
+                    if (pawn.race.race.corpseDef != null && pawn.race.race.corpseDef.recipes.Contains(MechanoidFoundryDefOf.MF_HackMechanoid) is false)
+                    {
+                        pawn.race.race.corpseDef.recipes.Add(MechanoidFoundryDefOf.MF_HackMechanoid);
+                    }
                 }
             }
         }

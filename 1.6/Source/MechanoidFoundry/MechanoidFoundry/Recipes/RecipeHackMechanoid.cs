@@ -1,4 +1,4 @@
-﻿using RimWorld;
+using RimWorld;
 using System.Collections.Generic;
 using Verse;
 
@@ -8,16 +8,18 @@ namespace MechanoidFoundry
     {
         public override bool AvailableOnNow(Thing thing, BodyPartRecord part = null)
         {
-            if (thing is Pawn pawn && !pawn.Dead)
+            if (thing is Pawn pawn && pawn.IsMechanoidHacked())
             {
                 return false;
             }
             return base.AvailableOnNow(thing, part);
         }
-
         public override void ApplyOnPawn(Pawn pawn, BodyPartRecord part, Pawn billDoer, List<Thing> ingredients, Bill bill)
         {
-            ResurrectionUtility.TryResurrect(pawn);
+            if (pawn.Dead)
+            {
+                ResurrectionUtility.TryResurrect(pawn);
+            }
             pawn.health.AddHediff(MechanoidFoundryDefOf.MF_MechanoidHacked);
             var eq = pawn.equipment.Primary;
             if (eq != null)
