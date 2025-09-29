@@ -18,7 +18,7 @@
           </subNodes>
         </li>
 
-        <li Class="ThinkNode_ConditionalOfPlayerFaction">
+        <li Class="MechanoidFoundry.ThinkNode_Conditional_MechanoidHacked">
           <subNodes>
             <li Class="MechanoidFoundry.ThinkNode_ConditionalHasPower">
               <subNodes>

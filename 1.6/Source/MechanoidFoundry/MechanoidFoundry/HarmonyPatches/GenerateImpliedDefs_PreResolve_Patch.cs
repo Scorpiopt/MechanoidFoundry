@@ -46,8 +46,7 @@ namespace MechanoidFoundry
                             }
                         }
 
-                        int index = pawn.race.race.thinkTreeMain.thinkRoot.subNodes.FindIndex(x => x is ThinkNode_Subtree subtree
-                            && subtree.treeDef == MechanoidFoundryDefOf.Downed);
+                        int index = pawn.race.race.thinkTreeMain.thinkRoot.subNodes.FindIndex(x => x is ThinkNode_Subtree subtree && subtree.treeDef == MechanoidFoundryDefOf.Downed);
                         if (index >= 0)
                         {
                             var toAdd = new ThinkNode_Subtree
